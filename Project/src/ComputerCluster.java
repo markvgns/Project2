@@ -5,4 +5,6 @@ public class ComputerCluster {
     int GPU = 8;
     int Ethernet = 320;
 
+    int yomam;
+
 }
