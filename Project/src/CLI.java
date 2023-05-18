@@ -92,5 +92,44 @@ public class CLI {
     REMAIN_Ethernet -= Bandwidth;
     REMAIN_GPU -= gpu;
   }
+  
+  
+  public void updateVM(int updateID, int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth, int VMGPU)
+  {
+    for(int i=0;i<VMs.size();i++)
+        {
+            if(updateID == VMs.get(i).getVmId())
+            {
+                if (VMCPU != 0) {
+                    VMs.get(i).setVMCPU(VMCPU + VMs.get(i).getVMCPU());
+                  }
+                  if (VMRAM != 0) {
+                    VMs.get(i).setVMRAM(VMRAM + VMs.get(i).getVMRAM());
+                  }
+                  if (VMSoftware != null) {
+                    VMs.get(i).setVMSoftware(VMSoftware);
+                  }
+                  if (PlainSSD != 0 || VMs.get(i) instanceof PlainVM) {
+                    PlainVM plainvmObject = (PlainVM) VMs.get(i);  
+                    plainvmObject.setPlainSSD(PlainSSD + plainvmObject.getPlainSSD());  /* einai plainssd + plainobject.get() epeidh prostheto epipleon cores */
+                  }
+                  if (Bandwidth != 0 || VMs.get(i) instanceof VMNetworked && VMs.get(i) instanceof VMNetworkedGPU) {
+                    VMNetworked vmnetworkedObject = (VMNetworked) VMs.get(i);  /* den exei shmasia an einai  object ths Networked h NetworkedGPU apla ths bazo bandwidth */
+                    vmnetworkedObject.setBandwidth(Bandwidth + vmnetworkedObject.getBandwidth());
+                  }
+                  if (VMGPU != 0 || VMs.get(i) instanceof VMNetworkedGPU && VMs.get(i) instanceof VmGPU) {
+                    VMNetworkedGPU vmnetworkedgpuObject = (VMNetworkedGPU) VMs.get(i); /* omois me apo pano apla bazo GPU */
+                    vmnetworkedgpuObject.setNetGPU(VMGPU + vmnetworkedgpuObject.getNetGPU());
+                  }
 
+                  updateremaining(VMCPU, VMRAM, PlainSSD, Bandwidth, VMGPU);
+           
+            }
+
+
+        }
+    
+      }
+
+  
 }
