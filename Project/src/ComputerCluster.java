@@ -5,6 +5,14 @@ public class ComputerCluster {
     int GPU = 8;
     int Ethernet = 320;
 
+    int REMAIN_CPU ;
+    int REMAIN_RAM ;
+    int REMAIN_SSD ;
+    int REMAIN_GPU ;
+    int REMAIN_Ethernet ;
+
+    
+
   
 
 }
