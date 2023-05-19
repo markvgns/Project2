@@ -96,21 +96,21 @@ public class CLI {
 
         if (VMs.get(i) instanceof PlainVM) {
 
-          tempSSD = ((PlainVM) VMs.get(i)).getPlainSSD();
+          tempSSD -= ((PlainVM) VMs.get(i)).getPlainSSD();
         }
         if (VMs.get(i) instanceof VmGPU) {
 
-          tempGPU = ((VmGPU) VMs.get(i)).getVMGPU();
+          tempGPU -= ((VmGPU) VMs.get(i)).getVMGPU();
         }
 
         if (VMs.get(i) instanceof VMNetworked) {
 
-          tempBANDWIDTH = ((VMNetworked) VMs.get(i)).getBandwidth();
+          tempBANDWIDTH -= ((VMNetworked) VMs.get(i)).getBandwidth();
         }
 
         if (VMs.get(i) instanceof VMNetworkedGPU) {
 
-          tempGPU = ((VMNetworkedGPU) VMs.get(i)).getNetGPU();
+          tempGPU -= ((VMNetworkedGPU) VMs.get(i)).getNetGPU();
         }
         VMs.remove(i);
       }
@@ -153,6 +153,59 @@ public class CLI {
       }
 
     }
+  }
+
+  public void reportVMs(int reportID, int k) {
+    if (k == 1) /* kane report ola */
+    {
+      for (int j = 0; j < VMs.size(); j++) {
+        if (VMs.get(j) instanceof VM) {
+          System.out.println(VMs.get(j).getVMCPU() + "\t" + VMs.get(j).getVMRAM() + "\t" + VMs.get(j).getVMSoftware());
+
+        }
+        if (VMs.get(j) instanceof PlainVM) {
+          System.out.println("\t" + ((PlainVM) VMs.get(j)).getPlainSSD());
+        }
+        if (VMs.get(j) instanceof VmGPU) {
+          System.out.println("\t" + ((VmGPU) VMs.get(j)).getVMGPU());
+        }
+        if (VMs.get(j) instanceof VMNetworked) {
+          System.out.println("\t" + ((VMNetworked) VMs.get(j)).getBandwidth());
+        }
+        if (VMs.get(j) instanceof VMNetworkedGPU) {
+          System.out.println("\t" + ((VMNetworkedGPU) VMs.get(j)).getNetGPU());
+        }
+
+      }
+
+    } else if (k == 0) /* ena mono */
+    {
+      for (int i = 0; i < VMs.size(); i++) {
+        if (reportID == VMs.get(i).getVmId()) {
+          if (VMs.get(i) instanceof VM) {
+            System.out
+                .println(VMs.get(i).getVMCPU() + "\t" + VMs.get(i).getVMRAM() + "\t" + VMs.get(i).getVMSoftware());
+
+          }
+          if (VMs.get(i) instanceof PlainVM) {
+            System.out.println("\t" + ((PlainVM) VMs.get(i)).getPlainSSD());
+          }
+          if (VMs.get(i) instanceof VmGPU) {
+            System.out.println("\t" + ((VmGPU) VMs.get(i)).getVMGPU());
+          }
+          if (VMs.get(i) instanceof VMNetworked) {
+            System.out.println("\t" + ((VMNetworked) VMs.get(i)).getBandwidth());
+          }
+          if (VMs.get(i) instanceof VMNetworkedGPU) {
+            System.out.println("\t" + ((VMNetworkedGPU) VMs.get(i)).getNetGPU());
+          }
+
+        }
+
+      }
+
+    }
+
   }
 
 }
