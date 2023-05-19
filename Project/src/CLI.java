@@ -91,35 +91,31 @@ public class CLI {
 
     for (int i = 0; i < VMs.size(); i++) {
       if (VmID == VMs.get(i).getVmId()) {
+        tempCPU = VMs.get(i).getVMCPU();
+        tempRAM = VMs.get(i).getVMRAM();
+
         if (VMs.get(i) instanceof PlainVM) {
-          tempCPU = ((PlainVM) VMs.get(i)).getVMCPU();
-          tempRAM = ((PlainVM) VMs.get(i)).getVMRAM();
+
           tempSSD = ((PlainVM) VMs.get(i)).getPlainSSD();
         }
         if (VMs.get(i) instanceof VmGPU) {
-          tempCPU = ((VmGPU) VMs.get(i)).getVMCPU();
-          tempRAM = ((VmGPU) VMs.get(i)).getVMRAM();
-          tempSSD = ((VmGPU) VMs.get(i)).getPlainSSD();
+
           tempGPU = ((VmGPU) VMs.get(i)).getVMGPU();
         }
 
         if (VMs.get(i) instanceof VMNetworked) {
-          tempCPU = ((VMNetworked) VMs.get(i)).getVMCPU();
-          tempRAM = ((VMNetworked) VMs.get(i)).getVMRAM();
-          tempSSD = ((VMNetworked) VMs.get(i)).getPlainSSD();
+
           tempBANDWIDTH = ((VMNetworked) VMs.get(i)).getBandwidth();
         }
 
         if (VMs.get(i) instanceof VMNetworkedGPU) {
-          tempCPU = ((VMNetworkedGPU) VMs.get(i)).getVMCPU();
-          tempRAM = ((VMNetworkedGPU) VMs.get(i)).getVMRAM();
-          tempSSD = ((VMNetworkedGPU) VMs.get(i)).getPlainSSD();
-          tempBANDWIDTH = ((VMNetworkedGPU) VMs.get(i)).getBandwidth();
+
           tempGPU = ((VMNetworkedGPU) VMs.get(i)).getNetGPU();
         }
-
+        VMs.remove(i);
       }
     }
+
     updateremaining(tempCPU, tempRAM, tempSSD, tempBANDWIDTH, tempGPU);
   }
 
