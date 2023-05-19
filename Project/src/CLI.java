@@ -13,74 +13,63 @@ public class CLI {
   // VM
   public void createVm(int VMCPU, int VMRAM, String VMSoftware) {
     int VmID = createRandomInt();
-
     VM tempVm = new VM(VmID, VMCPU, VMRAM, VMSoftware);
     VMs.add(tempVm);
-    updateremaining(VMCPU, VMRAM, 0, 0, 0);
-
   }
 
   // PlainVM
   public void createPlainVm(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD) {
     int VmID = createRandomInt();
-
     PlainVM tempVm = new PlainVM(VmID, VMCPU, VMRAM, VMSoftware, PlainSSD);
     VMs.add(tempVm);
-    updateremaining(VMCPU, VMRAM, PlainSSD, 0, 0);
 
   }
 
   // VmGPU
   public void createVmGPU(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int VmGPU) {
     int VmID = createRandomInt();
-
     VmGPU tempVm = new VmGPU(VmID, VMCPU, VMRAM, VMSoftware, PlainSSD, VmGPU);
     VMs.add(tempVm);
-    updateremaining(VMCPU, VMRAM, PlainSSD, 0, VmGPU);
 
   }
 
   // VmNetworked
   public void createVmNetworked(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth) {
     int VmID = createRandomInt();
-
     VMNetworked tempVm = new VMNetworked(VmID, VMCPU, VMRAM, VMSoftware, PlainSSD, Bandwidth);
     VMs.add(tempVm);
-    updateremaining(VMCPU, VMRAM, PlainSSD, Bandwidth, 0);
 
   }
 
   // VmNetworkedGPU
   public void createVmNetworkedGPU(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth, int VMGPU) {
     int VmID = createRandomInt();
-
     VMNetworkedGPU tempVm = new VMNetworkedGPU(VmID, VMCPU, VMRAM, VMSoftware, PlainSSD, Bandwidth, VMGPU);
     VMs.add(tempVm);
-    updateremaining(VMCPU, VMRAM, PlainSSD, Bandwidth, VMGPU);
 
   }
 
   public int createRandomInt() {
-
     Random random = new Random();
     int randomInt = 0;
     int k = 1;
 
     while (k == 1) {
-      randomInt = random.nextInt(Integer.MAX_VALUE - 2147483000) + 1; /* ώστε το VMid να μην είναι πολύ μεγάλο */
+      randomInt = random.nextInt(Integer.MAX_VALUE - 2147483000) + 1;
       k = -1;
       for (int i = 0; i < VMs.size(); i++) {
         if (randomInt == VMs.get(i).getVmId()) {
           k = 1;
           break;
         }
+
       }
       if (k == -1) {
         break;
+
       }
 
     }
-
     return randomInt;
 
   }
@@ -91,6 +80,83 @@ public class CLI {
     REMAIN_SSD -= PlainSSD;
     REMAIN_Ethernet -= Bandwidth;
     REMAIN_GPU -= gpu;
+  }
+
+  public void delete(int VmID) {
+    int tempCPU = 0;
+    int tempRAM = 0;
+    int tempGPU = 0;
+    int tempBANDWIDTH = 0;
+    int tempSSD = 0;
+
+    for (int i = 0; i < VMs.size(); i++) {
+      if (VmID == VMs.get(i).getVmId()) {
+        if (VMs.get(i) instanceof PlainVM) {
+          tempCPU = ((PlainVM) VMs.get(i)).getVMCPU();
+          tempRAM = ((PlainVM) VMs.get(i)).getVMRAM();
+          tempSSD = ((PlainVM) VMs.get(i)).getPlainSSD();
+        }
+        if (VMs.get(i) instanceof VmGPU) {
+          tempCPU = ((VmGPU) VMs.get(i)).getVMCPU();
+          tempRAM = ((VmGPU) VMs.get(i)).getVMRAM();
+          tempSSD = ((VmGPU) VMs.get(i)).getPlainSSD();
+          tempGPU = ((VmGPU) VMs.get(i)).getVMGPU();
+        }
+
+        if (VMs.get(i) instanceof VMNetworked) {
+          tempCPU = ((VMNetworked) VMs.get(i)).getVMCPU();
+          tempRAM = ((VMNetworked) VMs.get(i)).getVMRAM();
+          tempSSD = ((VMNetworked) VMs.get(i)).getPlainSSD();
+          tempBANDWIDTH = ((VMNetworked) VMs.get(i)).getBandwidth();
+        }
+
+        if (VMs.get(i) instanceof VMNetworkedGPU) {
+          tempCPU = ((VMNetworkedGPU) VMs.get(i)).getVMCPU();
+          tempRAM = ((VMNetworkedGPU) VMs.get(i)).getVMRAM();
+          tempSSD = ((VMNetworkedGPU) VMs.get(i)).getPlainSSD();
+          tempBANDWIDTH = ((VMNetworkedGPU) VMs.get(i)).getBandwidth();
+          tempGPU = ((VMNetworkedGPU) VMs.get(i)).getNetGPU();
+        }
+
+      }
+    }
+    updateremaining(tempCPU, tempRAM, tempSSD, tempBANDWIDTH, tempGPU);
+  }
+
+  public void updateVM(int updateID, int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth, int VMGPU) {
+
+    if (VMCPU > REMAIN_CPU || VMRAM > REMAIN_RAM || PlainSSD > REMAIN_SSD || Bandwidth > REMAIN_Ethernet
+        || VMGPU > REMAIN_GPU) {
+      System.out.println("There are not enough resources available at the computer cluster!! Please try again. ");
+      return;
+    }
+
+    for (int i = 0; i < VMs.size(); i++) {
+      if (updateID == VMs.get(i).getVmId()) {
+        if (VMCPU != 0) {
+          VMs.get(i).setVMCPU(VMCPU + VMs.get(i).getVMCPU());
+        }
+        if (VMRAM != 0) {
+          VMs.get(i).setVMRAM(VMRAM + VMs.get(i).getVMRAM());
+        }
+        if (VMSoftware != null) {
+          VMs.get(i).setVMSoftware(VMSoftware);
+        }
+        if (PlainSSD != 0 && VMs.get(i) instanceof PlainVM) {
+          ((PlainVM) VMs.get(i)).setPlainSSD(PlainSSD + ((PlainVM) VMs.get(i)).getPlainSSD());
+        }
+        if (Bandwidth != 0 && VMs.get(i) instanceof VMNetworked || VMs.get(i) instanceof VMNetworkedGPU) {
+          ((VMNetworked) VMs.get(i)).setBandwidth(Bandwidth + ((VMNetworked) VMs.get(i)).getBandwidth());
+        }
+        if (VMGPU != 0 && VMs.get(i) instanceof VMNetworkedGPU || VMs.get(i) instanceof VmGPU) {
+          ((VMNetworkedGPU) VMs.get(i)).setNetGPU(VMGPU + ((VMNetworkedGPU) VMs.get(i)).getNetGPU());
+        }
+
+        updateremaining(VMCPU, VMRAM, PlainSSD, Bandwidth, VMGPU);
+
+      }
+
+    }
   }
 
 }
