@@ -4,11 +4,13 @@ import java.util.Random;
 public class CLI {
 
   ArrayList<VM> VMs = new ArrayList<>();
-  public int REMAIN_CPU = ComputerCluster.Max_CPU;
-  public int REMAIN_RAM = ComputerCluster.Max_RAM;
-  public int REMAIN_SSD = ComputerCluster.Max_SSD;
-  public int REMAIN_GPU = ComputerCluster.Max_GPU;
-  public int REMAIN_Ethernet = ComputerCluster.Max_Ethernet;
+  ArrayList<Projects> ProjectList = new ArrayList<>();
+
+  private static int REMAIN_CPU = ComputerCluster.Max_CPU;
+  private static int REMAIN_RAM = ComputerCluster.Max_RAM;
+  private static int REMAIN_SSD = ComputerCluster.Max_SSD;
+  private static int REMAIN_GPU = ComputerCluster.Max_GPU;
+  private static int REMAIN_Ethernet = ComputerCluster.Max_Ethernet;
 
   // VM
   public void createVm(int VMCPU, int VMRAM, String VMSoftware) {
@@ -206,6 +208,26 @@ public class CLI {
 
     }
 
+  }
+
+  public static int getREMAIN_CPU() {
+    return REMAIN_CPU;
+  }
+
+  public static int getREMAIN_RAM() {
+    return REMAIN_RAM;
+  }
+
+  public static int getREMAIN_SSD() {
+    return REMAIN_SSD;
+  }
+
+  public static int getREMAIN_GPU() {
+    return REMAIN_GPU;
+  }
+
+  public static int getREMAIN_Ethernet() {
+    return REMAIN_Ethernet;
   }
 
 }
