@@ -9,10 +9,10 @@ public class Projects {
   private int ProgramGPU;
   private int ProgramBandwidth;
   private int ProgramExpectedTime;
-  private double priorityOrder = 0;
+  private double priorityOrder;
 
-  public Projects(int pID, int programCores, int programRAM, int programSSD, int programGPU, int programBandwidth,
-      int programExpectedTime) {
+  public Projects(int pID, int programCores, int programRAM, int programSSD, int programGPU, int programBandwidth, int programExpectedTime) 
+  {
     this.pID = pID;
     this.ProgramCores = programCores;
     this.ProgramRAM = programRAM;
@@ -20,11 +20,16 @@ public class Projects {
     this.ProgramGPU = programGPU;
     this.ProgramBandwidth = programBandwidth;
     this.ProgramExpectedTime = programExpectedTime;
-    this.priorityOrder = 0;
+    this.priorityOrder = calculatePriorityOrder();
   }
 
   public int getpID() {
     return pID;
+  }
+  
+  public double getPriorityOrder()
+  {
+    return priorityOrder;
   }
 
   public void setpID(int pID) {
@@ -92,19 +97,19 @@ public class Projects {
   // return ExecutionTime;
   // }
 
-  public void calculatePriorityOrder() {
-    double priorityOrder;
+  public double calculatePriorityOrder() {
+    double order = 0;
     int remainingCores = ComputerCluster.Max_CPU - CLI.getREMAIN_CPU();
     int remainingRAM = ComputerCluster.Max_RAM - CLI.getREMAIN_RAM();
     int remainingSSD = ComputerCluster.Max_SSD - CLI.getREMAIN_SSD();
     int remainingGPU = ComputerCluster.Max_GPU - CLI.getREMAIN_GPU();
     int remainingBandwidth = ComputerCluster.Max_Ethernet - CLI.getREMAIN_Ethernet();
 
-    priorityOrder = (getProgramCores() / remainingCores) + (getProgramRAM() / remainingRAM) +
+    order = (getProgramCores() / remainingCores) + (getProgramRAM() / remainingRAM) +
         (getProgramSSD() / remainingSSD) + (getProgramGPU() / remainingGPU)
         + (getProgramBandwidth() / remainingBandwidth);
 
-    this.priorityOrder = priorityOrder;
+    return order;
 
   }
 
