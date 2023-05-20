@@ -5,7 +5,8 @@ public class CLI {
 
   ArrayList<VM> VMs = new ArrayList<>();
   ArrayList<Projects> ProjectList = new ArrayList<>();
-
+/* molis sthn main exoume teleiosei na kanoume thn createProjects tote xrhsimopoioume thn selectionSort(ProjectList); gia na kanoume sort to array */
+  
   private static int REMAIN_CPU = ComputerCluster.Max_CPU;
   private static int REMAIN_RAM = ComputerCluster.Max_RAM;
   private static int REMAIN_SSD = ComputerCluster.Max_SSD;
@@ -240,5 +241,33 @@ public class CLI {
   public static int getREMAIN_Ethernet() {
     return REMAIN_Ethernet;
   }
+  
+  
+  
+  public void selectionSort(ArrayList<Projects> array)
+  {
+    for(int i=0;i<array.size() - 1;i++)
+    {
+      int minOrder =i;
 
+      for(int j= i+1; j<array.size(); j++)
+      {
+        if(array.get(minOrder).getPriorityOrder() > array.get(j).getPriorityOrder())
+        {
+          minOrder = j;
+        }
+
+      }
+
+      Projects tempProject = array.get(i);
+      array.set(i, array.get(minOrder));
+      array.set(minOrder, tempProject);
+
+    }
+
+
+  }
+
+  
+  
 }
