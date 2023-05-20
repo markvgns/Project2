@@ -51,6 +51,17 @@ public class CLI {
 
   }
 
+  // Projects
+  public void createProject(int CPU, int RAM, int SSD, int GPU, int Bandwidth, int ExpectedTime) {
+    int pID = -5;
+    while (pID < 0) {
+      pID = createRandomInt();
+    }
+    Projects tempProject = new Projects(pID, CPU, RAM, SSD, GPU, Bandwidth, ExpectedTime);
+    ProjectList.add(tempProject);
+
+  }
+
   public int createRandomInt() {
     Random random = new Random();
     int randomInt = 0;
