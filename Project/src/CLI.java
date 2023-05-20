@@ -221,6 +221,25 @@ public class CLI {
 
   }
 
+  public void selectionSort(ArrayList<Projects> array) {
+    for (int i = 0; i < array.size() - 1; i++) {
+      int minOrder = i;
+
+      for (int j = i + 1; j < array.size(); j++) {
+        if (array.get(minOrder).getPriorityOrder() > array.get(j).getPriorityOrder()) {
+          minOrder = j;
+        }
+
+      }
+
+      Projects tempProject = array.get(i);
+      array.set(i, array.get(minOrder));
+      array.set(minOrder, tempProject);
+
+    }
+
+  }
+
   public static int getREMAIN_CPU() {
     return REMAIN_CPU;
   }

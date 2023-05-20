@@ -1,5 +1,3 @@
-import java.util.Comparator;
-import java.util.PriorityQueue;
 
 public class Projects {
   private int pID;
@@ -9,7 +7,7 @@ public class Projects {
   private int ProgramGPU;
   private int ProgramBandwidth;
   private int ProgramExpectedTime;
-  private double priorityOrder = 0;
+  private double priorityOrder;
 
   public Projects(int pID, int programCores, int programRAM, int programSSD, int programGPU, int programBandwidth,
       int programExpectedTime) {
@@ -20,7 +18,23 @@ public class Projects {
     this.ProgramGPU = programGPU;
     this.ProgramBandwidth = programBandwidth;
     this.ProgramExpectedTime = programExpectedTime;
-    this.priorityOrder = 0;
+    this.priorityOrder = calculatePriorityOrder();
+  }
+
+  public double calculatePriorityOrder() {
+    double order = 0;
+    int remainingCores = ComputerCluster.Max_CPU - CLI.getREMAIN_CPU();
+    int remainingRAM = ComputerCluster.Max_RAM - CLI.getREMAIN_RAM();
+    int remainingSSD = ComputerCluster.Max_SSD - CLI.getREMAIN_SSD();
+    int remainingGPU = ComputerCluster.Max_GPU - CLI.getREMAIN_GPU();
+    int remainingBandwidth = ComputerCluster.Max_Ethernet - CLI.getREMAIN_Ethernet();
+
+    order = (getProgramCores() / remainingCores) + (getProgramRAM() / remainingRAM) +
+        (getProgramSSD() / remainingSSD) + (getProgramGPU() / remainingGPU)
+        + (getProgramBandwidth() / remainingBandwidth);
+
+    return order;
+
   }
 
   public int getpID() {
@@ -75,8 +89,16 @@ public class Projects {
     return ProgramExpectedTime;
   }
 
-  public void setProgramExecutionTime(int programExpectedTime) {
+  public void setProgramExpectedTime(int programExpectedTime) {
     ProgramExpectedTime = programExpectedTime;
+  }
+
+  public double getPriorityOrder() {
+    return priorityOrder;
+  }
+
+  public void setPriorityOrder(double priorityOrder) {
+    this.priorityOrder = priorityOrder;
   }
 
   // public int getExecutionTime() {
@@ -91,21 +113,5 @@ public class Projects {
   // /* meion thn stimh pou arxise na ekteleite to sigekrimeno program */
   // return ExecutionTime;
   // }
-
-  public void calculatePriorityOrder() {
-    double priorityOrder;
-    int remainingCores = ComputerCluster.Max_CPU - CLI.getREMAIN_CPU();
-    int remainingRAM = ComputerCluster.Max_RAM - CLI.getREMAIN_RAM();
-    int remainingSSD = ComputerCluster.Max_SSD - CLI.getREMAIN_SSD();
-    int remainingGPU = ComputerCluster.Max_GPU - CLI.getREMAIN_GPU();
-    int remainingBandwidth = ComputerCluster.Max_Ethernet - CLI.getREMAIN_Ethernet();
-
-    priorityOrder = (getProgramCores() / remainingCores) + (getProgramRAM() / remainingRAM) +
-        (getProgramSSD() / remainingSSD) + (getProgramGPU() / remainingGPU)
-        + (getProgramBandwidth() / remainingBandwidth);
-
-    this.priorityOrder = priorityOrder;
-
-  }
 
 }
