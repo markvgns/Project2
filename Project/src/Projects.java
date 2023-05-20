@@ -8,6 +8,7 @@ public class Projects {
   private int ProgramBandwidth;
   private int ProgramExpectedTime;
   private double priorityOrder;
+  private long ProjectStartTime;
 
   public Projects(int pID, int programCores, int programRAM, int programSSD, int programGPU, int programBandwidth,
       int programExpectedTime) {
@@ -19,8 +20,10 @@ public class Projects {
     this.ProgramBandwidth = programBandwidth;
     this.ProgramExpectedTime = programExpectedTime;
     this.priorityOrder = calculatePriorityOrder();
+    this.ProjectStartTime = getProjectStartTime();
   }
 
+  
   public double calculatePriorityOrder() {
     double order = 0;
     int remainingCores = ComputerCluster.Max_CPU - CLI.getREMAIN_CPU();
@@ -36,6 +39,23 @@ public class Projects {
     return order;
 
   }
+  
+
+
+  public long getProjectStartTime()
+  {
+    long Start  = System.currentTimeMillis();
+    return Start;
+  }
+
+
+   public long getExecutionTime() 
+  {
+   long ExecutionTime = System.currentTimeMillis() - this.ProjectStartTime;
+
+   return ExecutionTime;
+  }
+  
 
   public int getpID() {
     return pID;
@@ -101,17 +121,7 @@ public class Projects {
     this.priorityOrder = priorityOrder;
   }
 
-  // public int getExecutionTime() {
-  // int ExecutionTime = getCurrentExecTime() - getstartExecTime(); /*
-  // * opou getCurrentExecTime - getstartExecTime einai h
-  // * diafora apo thn
-  // */
-  // /*
-  // * geniki ora olou tou to CLI ekeini ti stigmh(auto metraei apo otan arxise o
-  // * kodikas olos)
-  // */
-  // /* meion thn stimh pou arxise na ekteleite to sigekrimeno program */
-  // return ExecutionTime;
-  // }
+ 
+  
 
 }
