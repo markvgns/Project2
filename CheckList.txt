@@ -1,3 +1,3 @@
-
+-execution time gia ta project
 - elegxos poron stin create VM kai PROJECT
 - molis sthn main exoume teleiosei na kanoume thn createProjects tote xrhsimopoioume thn selectionSort(ProjectList); gia na kanoume sort to array *
