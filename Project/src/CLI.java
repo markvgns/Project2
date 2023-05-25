@@ -4,7 +4,9 @@ import java.util.Random;
 public class CLI {
 
   ArrayList<VM> VMs = new ArrayList<>();
-  ArrayList<Projects> ProjectList = new ArrayList<>();
+  ArrayList<Programs> ProgramList = new ArrayList<>();
+
+  int numofPrograms = 0;
 
   private static int REMAIN_CPU = ComputerCluster.Max_CPU;
   private static int REMAIN_RAM = ComputerCluster.Max_RAM;
@@ -51,14 +53,18 @@ public class CLI {
 
   }
 
-  // Projects
-  public void createProject(int CPU, int RAM, int SSD, int GPU, int Bandwidth, int ExpectedTime) {
+  // Programs
+  public void createProgram(int CPU, int RAM, int SSD, int GPU, int Bandwidth, int ExpectedTime) {
     int pID = -5;
     while (pID < 0) {
       pID = createRandomInt();
     }
-    Projects tempProject = new Projects(pID, CPU, RAM, SSD, GPU, Bandwidth, ExpectedTime);
-    ProjectList.add(tempProject);
+    Programs tempProgram = new Programs(pID, CPU, RAM, SSD, GPU, Bandwidth, ExpectedTime);
+    ProgramList.add(tempProgram);
+    if (numofPrograms > 1) {
+      selectionSort(ProgramList);
+    }
+    numofPrograms++;
 
   }
 
@@ -221,7 +227,7 @@ public class CLI {
 
   }
 
-  public void selectionSort(ArrayList<Projects> array) {
+  public void selectionSort(ArrayList<Programs> array) {
     for (int i = 0; i < array.size() - 1; i++) {
       int minOrder = i;
 
@@ -232,11 +238,94 @@ public class CLI {
 
       }
 
-      Projects tempProject = array.get(i);
+      Programs tempProgram = array.get(i);
       array.set(i, array.get(minOrder));
-      array.set(minOrder, tempProject);
+      array.set(minOrder, tempProgram);
 
     }
+
+  }
+
+  // Queue
+
+  public void startqueue(int numofPrograms, ArrayList<Programs> ProgramList) {
+    Programs[] array = new Programs[numofPrograms];
+    array = ProgramList.toArray(array);
+
+    // Queue BoundedQueue = new Queue(numofPrograms, array);
+
+  }
+
+  public int VMload(Programs Program) {
+    int CPUload = 0;
+    int k = -5;
+    int RAMload = 0;
+    int SSDload = 0;
+    int GPUload = 0;
+    int Bandwidthload = 0;
+    double tempload;
+    double minLoad = 1;
+
+    for (int i = 0; i <= VMs.size(); i++) {
+
+      CPUload = (Program.getProgramCores() + VMs.get(i).getAllocated_CPU()) / VMs.get(i).getVMCPU();
+
+      RAMload = (Program.getProgramRAM() + VMs.get(i).getAllocated_RAM()) / VMs.get(i).getVMCPU();
+
+      if (VMs.get(i) instanceof PlainVM) {
+        SSDload = (Program.getProgramSSD() + ((PlainVM) VMs.get(i)).getAllocated_SSD())
+            / ((PlainVM) VMs.get(i)).getPlainSSD();
+
+      }
+      if (VMs.get(i) instanceof VmGPU) {
+        GPUload = (Program.getProgramGPU() + ((VmGPU) VMs.get(i)).getAllocated_GPU())
+            / ((VmGPU) VMs.get(i)).getVMGPU();
+
+      }
+
+      if (VMs.get(i) instanceof VMNetworked) {
+        Bandwidthload = (Program.getProgramBandwidth() + ((VMNetworked) VMs.get(i)).getAllocated_Bandwidth())
+            / ((VMNetworked) VMs.get(i)).getBandwidth();
+
+      }
+
+      if (VMs.get(i) instanceof VMNetworkedGPU) {
+        GPUload = (Program.getProgramGPU() + ((VMNetworkedGPU) VMs.get(i)).getAllocated_NetGPU())
+            / ((VMNetworkedGPU) VMs.get(i)).getNetGPU();
+
+      }
+
+      if (VMs.get(i) instanceof PlainVM) {
+
+        if (VMs.get(i) instanceof VmGPU || VMs.get(i) instanceof VMNetworked) {
+          if (VMs.get(i) instanceof VMNetworkedGPU) {
+            tempload = (CPUload + RAMload + SSDload + GPUload + Bandwidthload) / 5;
+          } else {
+            tempload = (CPUload + RAMload + SSDload + GPUload + Bandwidthload) / 4;
+          }
+
+        } else {
+          tempload = (CPUload + RAMload + SSDload + GPUload + Bandwidthload) / 3;
+        }
+
+      } else {
+        tempload = (CPUload + RAMload + SSDload + GPUload + Bandwidthload) / 2;
+      }
+      if ((Program.getProgramSSD() != 0 && !(VMs.get(i) instanceof PlainVM))
+          || (Program.getProgramBandwidth() != 0 && !(VMs.get(i) instanceof VMNetworked))
+          || (Program.getProgramGPU() != 0 && !(VMs.get(i) instanceof VmGPU))
+          || (Program.getProgramGPU() != 0 && !(VMs.get(i) instanceof VMNetworkedGPU))) {
+
+        continue;
+
+      }
+      if (tempload < minLoad) {
+        minLoad = tempload;
+        k = i;
+      }
+    }
+
+    return k;
 
   }
 

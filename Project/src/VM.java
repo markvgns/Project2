@@ -1,8 +1,14 @@
+import java.util.LinkedList;
+
 public class VM extends ComputerCluster {
   private int VmId;
   private int VMCPU;
   private int VMRAM;
   private String VMSoftware;
+  private int Allocated_CPU;
+  private int Allocated_RAM;
+
+  LinkedList<Programs> ExecutingProjects = new LinkedList<>();
 
   public VM(int VmId, int VMCPU, int VMRAM, String VMSoftware) {
     this.VmId = VmId;
@@ -42,6 +48,22 @@ public class VM extends ComputerCluster {
 
   public void setVMSoftware(String vMSoftware) {
     VMSoftware = vMSoftware;
+  }
+
+  public int getAllocated_CPU() {
+    return Allocated_CPU;
+  }
+
+  public void setAllocated_CPU(int allocated_CPU) {
+    Allocated_CPU = allocated_CPU;
+  }
+
+  public int getAllocated_RAM() {
+    return Allocated_RAM;
+  }
+
+  public void setAllocated_RAM(int allocated_RAM) {
+    Allocated_RAM = allocated_RAM;
   }
 
 }

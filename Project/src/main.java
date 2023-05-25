@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+
+public class main<E> {
+
+  public static void main(String[] args) {
+    ArrayList<Integer> numbers = new ArrayList<>();
+    numbers.add(5);
+    numbers.add(4);
+    numbers.add(6);
+    numbers.add(8);
+    numbers.add(9);
+    Queue<Integer> BoundedQueue = new Queue<>(numbers.size());
+    for (int i = 0; i < numbers.size(); i++) {
+
+      BoundedQueue.enQueue(numbers.get(i));
+    }
+    int k = 0;
+    while (true) {
+      int i = 0;
+      if (BoundedQueue.peek() == 6 && i == 0) {
+        BoundedQueue.totheback();
+        i = 1;
+        continue;
+
+      }
+      k = BoundedQueue.deQueue();
+      System.out.println(k);
+
+    }
+
+  }
+}

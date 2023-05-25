@@ -1,15 +1,16 @@
 
-public class Projects {
+public class Programs {
   private int pID;
-  private int ProgramCores;
-  private int ProgramRAM;
-  private int ProgramSSD;
-  private int ProgramGPU;
-  private int ProgramBandwidth;
+  private int ProgramCores = 0;
+  private int ProgramRAM = 0;
+  private int ProgramSSD = 0;
+  private int ProgramGPU = 0;
+  private int ProgramBandwidth = 0;
   private int ProgramExpectedTime;
   private double priorityOrder;
+  private long ProgramStartTime;
 
-  public Projects(int pID, int programCores, int programRAM, int programSSD, int programGPU, int programBandwidth,
+  public Programs(int pID, int programCores, int programRAM, int programSSD, int programGPU, int programBandwidth,
       int programExpectedTime) {
     this.pID = pID;
     this.ProgramCores = programCores;
@@ -19,6 +20,7 @@ public class Projects {
     this.ProgramBandwidth = programBandwidth;
     this.ProgramExpectedTime = programExpectedTime;
     this.priorityOrder = calculatePriorityOrder();
+    this.ProgramStartTime = getProgramStartTime();
   }
 
   public double calculatePriorityOrder() {
@@ -35,6 +37,17 @@ public class Projects {
 
     return order;
 
+  }
+
+  public long getProgramStartTime() {
+    long Start = System.currentTimeMillis();
+    return Start;
+  }
+
+  public long getExecutionTime() {
+    long ExecutionTime = System.currentTimeMillis() - this.ProgramStartTime;
+
+    return ExecutionTime;
   }
 
   public int getpID() {
@@ -100,18 +113,5 @@ public class Projects {
   public void setPriorityOrder(double priorityOrder) {
     this.priorityOrder = priorityOrder;
   }
-
-  // public int getExecutionTime() {
-  // int ExecutionTime = getCurrentExecTime() - getstartExecTime(); /*
-  // * opou getCurrentExecTime - getstartExecTime einai h
-  // * diafora apo thn
-  // */
-  // /*
-  // * geniki ora olou tou to CLI ekeini ti stigmh(auto metraei apo otan arxise o
-  // * kodikas olos)
-  // */
-  // /* meion thn stimh pou arxise na ekteleite to sigekrimeno program */
-  // return ExecutionTime;
-  // }
 
 }
