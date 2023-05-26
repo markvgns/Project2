@@ -22,6 +22,7 @@ public class Programs {
     this.ProgramBandwidth = programBandwidth;
     this.ProgramExpectedTime = programExpectedTime;
     this.priorityOrder = calculatePriorityOrder();
+    this.ProjectStartTime = getProjectStartTime();
 
   }
 
@@ -41,8 +42,9 @@ public class Programs {
 
   }
 
-  public void getProgramStartTime() {
-    ProgramStartTime = System.currentTimeMillis();
+  public long getProgramStartTime() {
+    long start = System.currentTimeMillis();
+    return start;
 
   }
 
