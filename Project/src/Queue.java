@@ -7,7 +7,7 @@ public class Queue<E> {
 
   public Queue(int maxSize) {
 
-    this.queueArray = new Object[maxSize + 4];
+    this.queueArray = new Object[maxSize * 2];
   }
 
   public void enQueue(E e) {
@@ -45,17 +45,16 @@ public class Queue<E> {
     return isQueueEmpty() ? null : (E) queueArray[head];
   }
 
-  public void totheback() {
-    enQueue(peek());
-    head++;
+  public void totheback(E e) {
+    enQueue(e);
 
   }
 
-  private boolean isQueueEmpty() {
+  public boolean isQueueEmpty() {
     return size == 0;
   }
 
-  private boolean isQueueFull() {
+  public boolean isQueueFull() {
     return size == queueArray.length;
   }
 

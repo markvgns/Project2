@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.ProgressMonitor;
+
 public class CLI {
 
   ArrayList<VM> VMs = new ArrayList<>();
@@ -252,7 +254,26 @@ public class CLI {
     Programs[] array = new Programs[numofPrograms];
     array = ProgramList.toArray(array);
 
-    // Queue BoundedQueue = new Queue(numofPrograms, array);
+    Queue<Programs> BoundedQueue = new Queue<>(numofPrograms);
+    for (int i = 0; i < numofPrograms; i++) {
+      BoundedQueue.enQueue(array[i]);
+    }
+    while (!BoundedQueue.isQueueEmpty()) {
+      // execution time
+      int k = VMload(BoundedQueue.peek());
+      if (k != -5) {
+        addProgram(BoundedQueue.deQueue(), k);
+      } else {
+        BoundedQueue.peek().setRejectedTimes(BoundedQueue.peek().getRejectedTimes() + 1);
+        if (BoundedQueue.peek().getRejectedTimes() < 3) {
+          BoundedQueue.totheback(BoundedQueue.deQueue());
+        } else {
+          // steile to se arxeio
+        }
+
+      }
+
+    }
 
   }
 
@@ -326,6 +347,68 @@ public class CLI {
     }
 
     return k;
+
+  }
+
+  public void addProgram(Programs program, int index) {
+    program.getProgramStartTime();
+    VMs.get(index).ExecutingProjects.add(program);
+    VMs.get(index).setAllocated_CPU(VMs.get(index).getAllocated_CPU() + program.getProgramCores());
+    VMs.get(index).setAllocated_RAM(VMs.get(index).getAllocated_RAM() + program.getProgramRAM());
+
+    if (VMs.get(index) instanceof PlainVM) {
+      ((PlainVM) VMs.get(index))
+          .setAllocated_SSD(((PlainVM) VMs.get(index)).getAllocated_SSD() + program.getProgramSSD());
+    }
+
+    if (VMs.get(index) instanceof VmGPU) {
+      ((VmGPU) VMs.get(index)).setAllocated_GPU(((VmGPU) VMs.get(index)).getAllocated_GPU() + program.getProgramGPU());
+
+    }
+
+    if (VMs.get(index) instanceof VMNetworked) {
+      ((VMNetworked) VMs.get(index)).setAllocated_Bandwidth(
+          ((VMNetworked) VMs.get(index)).getAllocated_Bandwidth() + program.getProgramBandwidth());
+    }
+
+    if (VMs.get(index) instanceof VMNetworkedGPU) {
+      ((VMNetworkedGPU) VMs.get(index))
+          .setAllocated_NetGPU(((VMNetworkedGPU) VMs.get(index)).getAllocated_NetGPU() + program.getProgramGPU());
+    }
+
+  }
+
+  public void removeProgram(int indexofprogram, int index) {
+    VMs.get(index).setAllocated_CPU(
+        VMs.get(index).getAllocated_CPU() - VMs.get(index).ExecutingProjects.get(indexofprogram).getProgramCores());
+    VMs.get(index).setAllocated_RAM(
+        VMs.get(index).getAllocated_RAM() - VMs.get(index).ExecutingProjects.get(indexofprogram).getProgramRAM());
+
+    if (VMs.get(index) instanceof PlainVM) {
+      ((PlainVM) VMs.get(index))
+          .setAllocated_SSD(((PlainVM) VMs.get(index)).getAllocated_SSD()
+              - VMs.get(index).ExecutingProjects.get(indexofprogram).getProgramSSD());
+    }
+
+    if (VMs.get(index) instanceof VmGPU) {
+      ((VmGPU) VMs.get(index)).setAllocated_GPU(((VmGPU) VMs.get(index)).getAllocated_GPU()
+          - VMs.get(index).ExecutingProjects.get(indexofprogram).getProgramGPU());
+
+    }
+
+    if (VMs.get(index) instanceof VMNetworked) {
+      ((VMNetworked) VMs.get(index)).setAllocated_Bandwidth(
+          ((VMNetworked) VMs.get(index)).getAllocated_Bandwidth()
+              - VMs.get(index).ExecutingProjects.get(indexofprogram).getProgramBandwidth());
+    }
+
+    if (VMs.get(index) instanceof VMNetworkedGPU) {
+      ((VMNetworkedGPU) VMs.get(index))
+          .setAllocated_NetGPU(((VMNetworkedGPU) VMs.get(index)).getAllocated_NetGPU()
+              - VMs.get(index).ExecutingProjects.get(indexofprogram).getProgramGPU());
+    }
+
+    VMs.get(index).ExecutingProjects.remove(indexofprogram);
 
   }
 

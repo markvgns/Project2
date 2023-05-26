@@ -15,17 +15,20 @@ public class main<E> {
       BoundedQueue.enQueue(numbers.get(i));
     }
     int k = 0;
+    int i = 0;
     while (true) {
-      int i = 0;
-      if (BoundedQueue.peek() == 6 && i == 0) {
-        BoundedQueue.totheback();
-        i = 1;
+
+      if (i == 1) {
+        BoundedQueue.totheback(BoundedQueue.deQueue());
+        i++;
         continue;
 
-      }
-      k = BoundedQueue.deQueue();
-      System.out.println(k);
+      } else {
+        k = BoundedQueue.deQueue();
+        System.out.println(k);
+        i++;
 
+      }
     }
 
   }

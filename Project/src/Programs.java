@@ -10,6 +10,8 @@ public class Programs {
   private double priorityOrder;
   private long ProgramStartTime;
 
+  private int RejectedTimes = 0;
+
   public Programs(int pID, int programCores, int programRAM, int programSSD, int programGPU, int programBandwidth,
       int programExpectedTime) {
     this.pID = pID;
@@ -20,7 +22,7 @@ public class Programs {
     this.ProgramBandwidth = programBandwidth;
     this.ProgramExpectedTime = programExpectedTime;
     this.priorityOrder = calculatePriorityOrder();
-    this.ProgramStartTime = getProgramStartTime();
+
   }
 
   public double calculatePriorityOrder() {
@@ -39,13 +41,13 @@ public class Programs {
 
   }
 
-  public long getProgramStartTime() {
-    long Start = System.currentTimeMillis();
-    return Start;
+  public void getProgramStartTime() {
+    ProgramStartTime = System.currentTimeMillis();
+
   }
 
   public long getExecutionTime() {
-    long ExecutionTime = System.currentTimeMillis() - this.ProgramStartTime;
+    long ExecutionTime = System.currentTimeMillis() - ProgramStartTime;
 
     return ExecutionTime;
   }
@@ -112,6 +114,18 @@ public class Programs {
 
   public void setPriorityOrder(double priorityOrder) {
     this.priorityOrder = priorityOrder;
+  }
+
+  public void setProgramStartTime(long programStartTime) {
+    ProgramStartTime = programStartTime;
+  }
+
+  public int getRejectedTimes() {
+    return RejectedTimes;
+  }
+
+  public void setRejectedTimes(int rejectedTimes) {
+    RejectedTimes = rejectedTimes;
   }
 
 }
