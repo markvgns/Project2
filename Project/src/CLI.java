@@ -9,7 +9,7 @@ public class CLI {
  public static ArrayList<VM> VMs = new ArrayList<>();
  public static ArrayList<Programs> ProgramList = new ArrayList<>();
 
-  int numofPrograms = 0;
+  static int numofPrograms = 0;
 
   private static int REMAIN_CPU = ComputerCluster.Max_CPU;
   private static int REMAIN_RAM = ComputerCluster.Max_RAM;
@@ -28,14 +28,14 @@ public class CLI {
   }
 
   // VM
-  public void createVm(int VMCPU, int VMRAM, String VMSoftware) {
+  public static void createVm(int VMCPU, int VMRAM, String VMSoftware) {
     int VmID = createRandomInt();
     VM tempVm = new VM(VmID, VMCPU, VMRAM, VMSoftware);
     VMs.add(tempVm);
   }
 
   // PlainVM
-  public void createPlainVm(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD) {
+  public static void createPlainVm(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD) {
     int VmID = createRandomInt();
     PlainVM tempVm = new PlainVM(VmID, VMCPU, VMRAM, VMSoftware, PlainSSD);
     VMs.add(tempVm);
@@ -43,7 +43,7 @@ public class CLI {
   }
 
   // VmGPU
-  public void createVmGPU(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int VmGPU) {
+  public static void createVmGPU(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int VmGPU) {
     int VmID = createRandomInt();
     VmGPU tempVm = new VmGPU(VmID, VMCPU, VMRAM, VMSoftware, PlainSSD, VmGPU);
     VMs.add(tempVm);
@@ -51,7 +51,7 @@ public class CLI {
   }
 
   // VmNetworked
-  public void createVmNetworked(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth) {
+  public static void createVmNetworked(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth) {
     int VmID = createRandomInt();
     VMNetworked tempVm = new VMNetworked(VmID, VMCPU, VMRAM, VMSoftware, PlainSSD, Bandwidth);
     VMs.add(tempVm);
@@ -59,7 +59,7 @@ public class CLI {
   }
 
   // VmNetworkedGPU
-  public void createVmNetworkedGPU(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth, int VMGPU) {
+  public static void createVmNetworkedGPU(int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth, int VMGPU) {
     int VmID = createRandomInt();
     VMNetworkedGPU tempVm = new VMNetworkedGPU(VmID, VMCPU, VMRAM, VMSoftware, PlainSSD, Bandwidth, VMGPU);
     VMs.add(tempVm);
@@ -67,7 +67,7 @@ public class CLI {
   }
 
   // Programs
-  public void createProgram(int CPU, int RAM, int SSD, int GPU, int Bandwidth, int ExpectedTime) {
+  public static void createProgram(int CPU, int RAM, int SSD, int GPU, int Bandwidth, int ExpectedTime) {
     int pID = -5;
     while (pID < 0) {
       pID = createRandomInt();
@@ -81,7 +81,7 @@ public class CLI {
 
   }
 
-  public int createRandomInt() {
+  public static int createRandomInt() {
     Random random = new Random();
     int randomInt = 0;
     int k = 1;
@@ -106,7 +106,7 @@ public class CLI {
 
   }
 
-  public void updateremaining(int VMCPU, int VMRAM, int PlainSSD, int Bandwidth, int gpu) {
+  public static void updateremaining(int VMCPU, int VMRAM, int PlainSSD, int Bandwidth, int gpu) {
     REMAIN_CPU -= VMCPU;
     REMAIN_RAM -= VMRAM;
     REMAIN_SSD -= PlainSSD;
@@ -151,7 +151,7 @@ public class CLI {
     updateremaining(tempCPU, tempRAM, tempSSD, tempBANDWIDTH, tempGPU);
   }
 
-  public void updateVM(int updateID, int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth, int VMGPU) {
+  public static void updateVM(int updateID, int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth, int VMGPU) {
 
     if (VMCPU > REMAIN_CPU || VMRAM > REMAIN_RAM || PlainSSD > REMAIN_SSD || Bandwidth > REMAIN_Ethernet
         || VMGPU > REMAIN_GPU) {
@@ -189,7 +189,7 @@ public class CLI {
 
   
 
-  public void selectionSort(ArrayList<Programs> array) {
+  public static void selectionSort(ArrayList<Programs> array) {
     for (int i = 0; i < array.size() - 1; i++) {
       int minOrder = i;
 

@@ -5,3 +5,6 @@
 -abstract
 -afoy anatithete ena program sto vm prosthese to allocated
 -sleeping sto gui 
+-bgainei minima ti eidous VM na valei
+-ektiposi VmID
+-program ID

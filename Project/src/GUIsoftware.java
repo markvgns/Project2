@@ -758,7 +758,7 @@ public static void main(String[] args)
 
                         projectcoreScanner.close();
 
-                        CLI.createProject(cores, ram, ssd, gpu, bandwidth, expectedtime);
+                        CLI.createProgram(cores, ram, ssd, gpu, bandwidth, expectedtime);
 
    
                         CreateProjectPanel2.revalidate();
