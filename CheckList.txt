@@ -8,3 +8,5 @@
 -bgainei minima ti eidous VM na valei
 -ektiposi VmID
 -program ID
+-report na fainetai kai sto queue
+-diegrapse main
