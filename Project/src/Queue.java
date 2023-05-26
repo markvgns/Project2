@@ -7,7 +7,7 @@ public class Queue<E> {
 
   public Queue(int maxSize) {
 
-    this.queueArray = new Object[maxSize * 2];
+    this.queueArray = new Object[maxSize * 3];
   }
 
   public void enQueue(E e) {
@@ -23,11 +23,8 @@ public class Queue<E> {
     size++;
   }
 
-  /**
-   * Method to DeQueue or Remove an Item From Queue
-   * 
-   * @return return DeQueued or Removed Item from queue(head)
-   */
+  
+  
   public E deQueue() {
     // Checking if queue is Empty before Removing new item
     if (isQueueEmpty()) {

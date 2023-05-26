@@ -46,8 +46,8 @@ public class Programs {
 
   }
 
-  public long getExecutionTime() {
-    long ExecutionTime = System.currentTimeMillis() - ProgramStartTime;
+  public float getExecutionTime() {
+    float ExecutionTime = (System.currentTimeMillis() - ProgramStartTime)/ 1000F;
 
     return ExecutionTime;
   }

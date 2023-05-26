@@ -1,35 +1,16 @@
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class main<E> {
 
   public static void main(String[] args) {
-    ArrayList<Integer> numbers = new ArrayList<>();
-    numbers.add(5);
-    numbers.add(4);
-    numbers.add(6);
-    numbers.add(8);
-    numbers.add(9);
-    Queue<Integer> BoundedQueue = new Queue<>(numbers.size());
-    for (int i = 0; i < numbers.size(); i++) {
-
-      BoundedQueue.enQueue(numbers.get(i));
+    System.out.println("Going to sleep....");
+    long timetosleep = 2L;
+    TimeUnit time = TimeUnit.SECONDS;
+    try {
+      time.sleep(timetosleep);
+    } catch (InterruptedException e) {
+      System.out.println(e.getMessage());
     }
-    int k = 0;
-    int i = 0;
-    while (true) {
-
-      if (i == 1) {
-        BoundedQueue.totheback(BoundedQueue.deQueue());
-        i++;
-        continue;
-
-      } else {
-        k = BoundedQueue.deQueue();
-        System.out.println(k);
-        i++;
-
-      }
-    }
-
   }
 }

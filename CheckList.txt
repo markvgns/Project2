@@ -1,6 +1,7 @@
-- execution time gia ta project
+
 - elegxos poron stin create VM kai PROJECT
 - stin report vale ta allocated
 - vgale comments apo tin queue
 -abstract
 -afoy anatithete ena program sto vm prosthese to allocated
+-sleeping sto gui 

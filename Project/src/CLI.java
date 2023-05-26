@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.ProgressMonitor;
+import java.util.concurrent.*;
+
 
 public class CLI {
 
-  ArrayList<VM> VMs = new ArrayList<>();
-  ArrayList<Programs> ProgramList = new ArrayList<>();
+ public static ArrayList<VM> VMs = new ArrayList<>();
+ public static ArrayList<Programs> ProgramList = new ArrayList<>();
 
   int numofPrograms = 0;
 
@@ -255,19 +256,51 @@ public class CLI {
     array = ProgramList.toArray(array);
 
     Queue<Programs> BoundedQueue = new Queue<>(numofPrograms);
+    //enqueue
     for (int i = 0; i < numofPrograms; i++) {
       BoundedQueue.enQueue(array[i]);
     }
-    while (!BoundedQueue.isQueueEmpty()) {
-      // execution time
+    whileloop:
+    while (true) {
+      int programsadded = 0;
+      //checking if a program is finished
+      for (int i = 0; i < VMs.size(); i++) {
+        for (int j = 0; j < VMs.get(i).ExecutingProjects.size(); j++) {
+          if (VMs.get(i).ExecutingProjects.get(j).getExecutionTime() >= VMs.get(i).ExecutingProjects.get(j)
+              .getProgramExpectedTime()) {
+            removeProgram(j, i);
+            programsadded--;
+            if (programsadded == 0) {
+              break whileloop;
+            }
+
+          }
+
+        }
+      }
+      
       int k = VMload(BoundedQueue.peek());
+      
       if (k != -5) {
         addProgram(BoundedQueue.deQueue(), k);
+        
+        programsadded++;
       } else {
-        BoundedQueue.peek().setRejectedTimes(BoundedQueue.peek().getRejectedTimes() + 1);
+        Programs tempProgram = BoundedQueue.peek();
+        tempProgram.setRejectedTimes(tempProgram.getRejectedTimes()+1);
         if (BoundedQueue.peek().getRejectedTimes() < 3) {
-          BoundedQueue.totheback(BoundedQueue.deQueue());
+          BoundedQueue.totheback(tempProgram);
+          //sleeping
+          long timetosleep = 2L;
+          TimeUnit time = TimeUnit.SECONDS;
+          try{
+            time.sleep(timetosleep);
+          }
+          catch(InterruptedException e){
+              System.out.println(e.getMessage());
+          }
         } else {
+          //kai kane pop
           // steile to se arxeio
         }
 
