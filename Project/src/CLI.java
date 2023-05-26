@@ -16,6 +16,16 @@ public class CLI {
   private static int REMAIN_SSD = ComputerCluster.Max_SSD;
   private static int REMAIN_GPU = ComputerCluster.Max_GPU;
   private static int REMAIN_Ethernet = ComputerCluster.Max_Ethernet;
+ 
+  public static int z = 0;
+ 
+ public static int getZ() {
+    return z;
+  }
+
+  public static void setZ(int z) {
+    CLI.z = z;
+  }
 
   // VM
   public void createVm(int VMCPU, int VMRAM, String VMSoftware) {
@@ -104,7 +114,7 @@ public class CLI {
     REMAIN_GPU -= gpu;
   }
 
-  public void delete(int VmID) {
+  public static void delete(int VmID) {
     int tempCPU = 0;
     int tempRAM = 0;
     int tempGPU = 0;
@@ -113,8 +123,8 @@ public class CLI {
 
     for (int i = 0; i < VMs.size(); i++) {
       if (VmID == VMs.get(i).getVmId()) {
-        tempCPU = VMs.get(i).getVMCPU();
-        tempRAM = VMs.get(i).getVMRAM();
+        tempCPU -= VMs.get(i).getVMCPU();
+        tempRAM -= VMs.get(i).getVMRAM();
 
         if (VMs.get(i) instanceof PlainVM) {
 
@@ -177,58 +187,7 @@ public class CLI {
     }
   }
 
-  public void reportVMs(int reportID, int k) {
-    if (k == 1) /* kane report ola */
-    {
-      for (int j = 0; j < VMs.size(); j++) {
-        if (VMs.get(j) instanceof VM) {
-          System.out.println(VMs.get(j).getVMCPU() + "\t" + VMs.get(j).getVMRAM() + "\t" + VMs.get(j).getVMSoftware());
-
-        }
-        if (VMs.get(j) instanceof PlainVM) {
-          System.out.println("\t" + ((PlainVM) VMs.get(j)).getPlainSSD());
-        }
-        if (VMs.get(j) instanceof VmGPU) {
-          System.out.println("\t" + ((VmGPU) VMs.get(j)).getVMGPU());
-        }
-        if (VMs.get(j) instanceof VMNetworked) {
-          System.out.println("\t" + ((VMNetworked) VMs.get(j)).getBandwidth());
-        }
-        if (VMs.get(j) instanceof VMNetworkedGPU) {
-          System.out.println("\t" + ((VMNetworkedGPU) VMs.get(j)).getNetGPU());
-        }
-
-      }
-
-    } else if (k == 0) /* ena mono */
-    {
-      for (int i = 0; i < VMs.size(); i++) {
-        if (reportID == VMs.get(i).getVmId()) {
-          if (VMs.get(i) instanceof VM) {
-            System.out
-                .println(VMs.get(i).getVMCPU() + "\t" + VMs.get(i).getVMRAM() + "\t" + VMs.get(i).getVMSoftware());
-
-          }
-          if (VMs.get(i) instanceof PlainVM) {
-            System.out.println("\t" + ((PlainVM) VMs.get(i)).getPlainSSD());
-          }
-          if (VMs.get(i) instanceof VmGPU) {
-            System.out.println("\t" + ((VmGPU) VMs.get(i)).getVMGPU());
-          }
-          if (VMs.get(i) instanceof VMNetworked) {
-            System.out.println("\t" + ((VMNetworked) VMs.get(i)).getBandwidth());
-          }
-          if (VMs.get(i) instanceof VMNetworkedGPU) {
-            System.out.println("\t" + ((VMNetworkedGPU) VMs.get(i)).getNetGPU());
-          }
-
-        }
-
-      }
-
-    }
-
-  }
+  
 
   public void selectionSort(ArrayList<Programs> array) {
     for (int i = 0; i < array.size() - 1; i++) {
