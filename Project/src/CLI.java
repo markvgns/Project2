@@ -319,6 +319,7 @@ public class CLI {
     int Bandwidthload = 0;
     double tempload;
     double minLoad = 1;
+    
 
     for (int i = 0; i <= VMs.size(); i++) {
 
