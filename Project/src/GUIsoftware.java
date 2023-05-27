@@ -49,17 +49,8 @@ public static void main(String[] args)
          public void actionPerformed(ActionEvent e)
          {
             VMsFileCreator.setEnabled(false);
-
             /*method gia file*/
-          
-            
-            //----> pare Vms apo file kai bale int p=1 oste apo kato na mhn bgalei error
-
-            LableBuilder ErrorVMFile = new LableBuilder("No VMs found", 0, 150);
-            VMFileInfo.add(ErrorVMFile);
-            ErrorVMFile.repaint();
-            ErrorVMFile.revalidate();
-
+           
 
          }
 
@@ -640,27 +631,28 @@ public static void main(String[] args)
                               if (reportId == CLI.VMs.get(i).getVmId()) {
                       
                                 if (CLI.VMs.get(i) instanceof VM) {
-                                  String reportVMinfo = CLI.VMs.get(i).getVMCPU() + " " + CLI.VMs.get(i).getVMRAM() + " " + CLI.VMs.get(i).getVMSoftware() ;
+                                  String reportVMinfo = CLI.VMs.get(i).getVMCPU() + " " + CLI.VMs.get(i).getVMRAM() + " " + CLI.VMs.get(i).getVMSoftware() + " " + 
+                                  CLI.VMs.get(i).getAllocated_CPU() + " " +  CLI.VMs.get(i).getAllocated_RAM();
                                   LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
                                   ReportVMPanel.add(reportOneVM);
                                 }
                                 if (CLI.VMs.get(i) instanceof PlainVM) {
-                                  String reportVMinfo = " " + ((PlainVM) CLI.VMs.get(i)).getPlainSSD() ;
+                                  String reportVMinfo = " " + ((PlainVM) CLI.VMs.get(i)).getPlainSSD() + " " + ((PlainVM) CLI.VMs.get(i)).getAllocated_SSD();
                                   LableBuilder reportOneVM =new LableBuilder(reportVMinfo, 0, 69);
                                   ReportVMPanel.add(reportOneVM);
                                 }
                                 if (CLI.VMs.get(i) instanceof VmGPU) {
-                                  String reportVMinfo = " " + ((VmGPU) CLI.VMs.get(i)).getVMGPU();
+                                  String reportVMinfo = " " + ((VmGPU) CLI.VMs.get(i)).getVMGPU() + " " + ((VmGPU) CLI.VMs.get(i)).getAllocated_GPU();
                                   LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
                                   ReportVMPanel.add(reportOneVM);
                                 }
                                 if (CLI.VMs.get(i) instanceof VMNetworked) {
-                                  String reportVMinfo = " " + ((VMNetworked) CLI.VMs.get(i)).getBandwidth() ;
+                                  String reportVMinfo = " " + ((VMNetworked) CLI.VMs.get(i)).getBandwidth() + " " + ((VMNetworked) CLI.VMs.get(i)).getAllocated_Bandwidth();
                                   LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
                                   ReportVMPanel.add(reportOneVM);
                                 }
                                 if (CLI.VMs.get(i) instanceof VMNetworkedGPU) {
-                                  String reportVMinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(i)).getNetGPU() ;
+                                  String reportVMinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(i)).getNetGPU() + " " + ((VMNetworkedGPU) CLI.VMs.get(i)).getAllocated_NetGPU() ;
                                   LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
                                   ReportVMPanel.add(reportOneVM);
                                 }
@@ -684,31 +676,33 @@ public static void main(String[] args)
                 
                 
                         if (CLI.VMs.get(j) instanceof VM) {
-                           String reportinfo = CLI.VMs.get(j).getVMCPU() + " " + CLI.VMs.get(j).getVMRAM() + " " + CLI.VMs.get(j).getVMSoftware() ; 
+                           String reportinfo = CLI.VMs.get(j).getVMCPU() + " " + CLI.VMs.get(j).getVMRAM() + " " + CLI.VMs.get(j).getVMSoftware() + " " + 
+                           CLI.VMs.get(j).getAllocated_CPU() + " " +  CLI.VMs.get(j).getAllocated_RAM();
+
                            LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
                            ReportVMPanel.add(reportAllVM);
                 
                         }
                         if (CLI.VMs.get(j) instanceof PlainVM) {
-                           String reportinfo = " " + ((PlainVM) CLI.VMs.get(j)).getPlainSSD() ; 
+                           String reportinfo = " " + ((PlainVM) CLI.VMs.get(j)).getPlainSSD() + " " + ((PlainVM) CLI.VMs.get(j)).getAllocated_SSD(); 
                           
                           LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
                           ReportVMPanel.add(reportAllVM);
                         }
                         if (CLI.VMs.get(j) instanceof VmGPU) {
-                           String reportinfo = " " + ((VmGPU) CLI.VMs.get(j)).getVMGPU() ;
+                           String reportinfo = " " + ((VmGPU) CLI.VMs.get(j)).getVMGPU() + " " + ((VmGPU) CLI.VMs.get(j)).getAllocated_GPU();
                           
                           LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
                           ReportVMPanel.add(reportAllVM);
                         }
                         if (CLI.VMs.get(j) instanceof VMNetworked) {
-                           String reportinfo = " " + ((VMNetworked) CLI.VMs.get(j)).getBandwidth() ; 
+                           String reportinfo = " " + ((VMNetworked) CLI.VMs.get(j)).getBandwidth() + " " + ((VMNetworked) CLI.VMs.get(j)).getAllocated_Bandwidth(); 
                           
                           LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
                           ReportVMPanel.add(reportAllVM);
                         }
                         if (CLI.VMs.get(j) instanceof VMNetworkedGPU) {
-                           String reportinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(j)).getNetGPU(); 
+                           String reportinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(j)).getNetGPU() + " " + ((VMNetworkedGPU) CLI.VMs.get(j)).getAllocated_NetGPU(); 
                           
                           LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
                           ReportVMPanel.add(reportAllVM);
@@ -1004,31 +998,33 @@ public static void main(String[] args)
 
                               if (FinalreportId == CLI.VMs.get(i).getVmId()) {
                       
-                                if (CLI.VMs.get(i) instanceof VM) {
-                                  String reportVMinfo = CLI.VMs.get(i).getVMCPU() + " " + CLI.VMs.get(i).getVMRAM() + " " + CLI.VMs.get(i).getVMSoftware() ;
-                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
-                                  ReportVMPanel.add(reportOneVM);
-                                }
-                                if (CLI.VMs.get(i) instanceof PlainVM) {
-                                  String reportVMinfo = " " + ((PlainVM) CLI.VMs.get(i)).getPlainSSD() ;
-                                  LableBuilder reportOneVM =new LableBuilder(reportVMinfo, 0, 69);
-                                  ReportVMPanel.add(reportOneVM);
-                                }
-                                if (CLI.VMs.get(i) instanceof VmGPU) {
-                                  String reportVMinfo = " " + ((VmGPU) CLI.VMs.get(i)).getVMGPU();
-                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
-                                  ReportVMPanel.add(reportOneVM);
-                                }
-                                if (CLI.VMs.get(i) instanceof VMNetworked) {
-                                  String reportVMinfo = " " + ((VMNetworked) CLI.VMs.get(i)).getBandwidth() ;
-                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
-                                  ReportVMPanel.add(reportOneVM);
-                                }
-                                if (CLI.VMs.get(i) instanceof VMNetworkedGPU) {
-                                  String reportVMinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(i)).getNetGPU() ;
-                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
-                                  ReportVMPanel.add(reportOneVM);
-                                }
+                                 if (CLI.VMs.get(i) instanceof VM) {
+                                    String reportVMinfo = CLI.VMs.get(i).getVMCPU() + " " + CLI.VMs.get(i).getVMRAM() + " " + CLI.VMs.get(i).getVMSoftware() + " " + 
+                                    CLI.VMs.get(i).getAllocated_CPU() + " " +  CLI.VMs.get(i).getAllocated_RAM();
+                                    LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                    ReportVMPanel.add(reportOneVM);
+                                  }
+                                  if (CLI.VMs.get(i) instanceof PlainVM) {
+                                    String reportVMinfo = " " + ((PlainVM) CLI.VMs.get(i)).getPlainSSD() + " " + ((PlainVM) CLI.VMs.get(i)).getAllocated_SSD();
+                                    LableBuilder reportOneVM =new LableBuilder(reportVMinfo, 0, 69);
+                                    ReportVMPanel.add(reportOneVM);
+                                  }
+                                  if (CLI.VMs.get(i) instanceof VmGPU) {
+                                    String reportVMinfo = " " + ((VmGPU) CLI.VMs.get(i)).getVMGPU() + " " + ((VmGPU) CLI.VMs.get(i)).getAllocated_GPU();
+                                    LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                    ReportVMPanel.add(reportOneVM);
+                                  }
+                                  if (CLI.VMs.get(i) instanceof VMNetworked) {
+                                    String reportVMinfo = " " + ((VMNetworked) CLI.VMs.get(i)).getBandwidth() + " " + ((VMNetworked) CLI.VMs.get(i)).getAllocated_Bandwidth();
+                                    LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                    ReportVMPanel.add(reportOneVM);
+                                  }
+                                  if (CLI.VMs.get(i) instanceof VMNetworkedGPU) {
+                                    String reportVMinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(i)).getNetGPU() + " " + ((VMNetworkedGPU) CLI.VMs.get(i)).getAllocated_NetGPU() ;
+                                    LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                    ReportVMPanel.add(reportOneVM);
+                                  }
+                        
                       
                               }
                       
@@ -1049,31 +1045,33 @@ public static void main(String[] args)
                 
                 
                         if (CLI.VMs.get(j) instanceof VM) {
-                           String reportinfo = CLI.VMs.get(j).getVMCPU() + " " + CLI.VMs.get(j).getVMRAM() + " " + CLI.VMs.get(j).getVMSoftware() ; 
+                           String reportinfo = CLI.VMs.get(j).getVMCPU() + " " + CLI.VMs.get(j).getVMRAM() + " " + CLI.VMs.get(j).getVMSoftware() + " " + 
+                           CLI.VMs.get(j).getAllocated_CPU() + " " +  CLI.VMs.get(j).getAllocated_RAM();
+
                            LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
                            ReportVMPanel.add(reportAllVM);
                 
                         }
                         if (CLI.VMs.get(j) instanceof PlainVM) {
-                           String reportinfo = " " + ((PlainVM) CLI.VMs.get(j)).getPlainSSD() ; 
+                           String reportinfo = " " + ((PlainVM) CLI.VMs.get(j)).getPlainSSD() + " " + ((PlainVM) CLI.VMs.get(j)).getAllocated_SSD(); 
                           
                           LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
                           ReportVMPanel.add(reportAllVM);
                         }
                         if (CLI.VMs.get(j) instanceof VmGPU) {
-                           String reportinfo = " " + ((VmGPU) CLI.VMs.get(j)).getVMGPU() ;
+                           String reportinfo = " " + ((VmGPU) CLI.VMs.get(j)).getVMGPU() + " " + ((VmGPU) CLI.VMs.get(j)).getAllocated_GPU();
                           
                           LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
                           ReportVMPanel.add(reportAllVM);
                         }
                         if (CLI.VMs.get(j) instanceof VMNetworked) {
-                           String reportinfo = " " + ((VMNetworked) CLI.VMs.get(j)).getBandwidth() ; 
+                           String reportinfo = " " + ((VMNetworked) CLI.VMs.get(j)).getBandwidth() + " " + ((VMNetworked) CLI.VMs.get(j)).getAllocated_Bandwidth(); 
                           
                           LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
                           ReportVMPanel.add(reportAllVM);
                         }
                         if (CLI.VMs.get(j) instanceof VMNetworkedGPU) {
-                           String reportinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(j)).getNetGPU(); 
+                           String reportinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(j)).getNetGPU() + " " + ((VMNetworkedGPU) CLI.VMs.get(j)).getAllocated_NetGPU(); 
                           
                           LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
                           ReportVMPanel.add(reportAllVM);
