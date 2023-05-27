@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.FileOutputStream;
+import java.util.Scanner;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+
 import java.util.concurrent.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class CLI {
@@ -30,6 +31,97 @@ public class CLI {
   public static void setZ(int z) {
     CLI.z = z;
   }
+
+  //create from file
+  public static void createvmfromfile() {
+    
+    String tempSoftware;
+    int tempCPU;
+    int tempRAM;
+    int tempSSD;
+    int tempBANDWIDTH;
+    int tempGpu;
+    
+    try {
+      Scanner reader = new Scanner(new FileReader("Project/src/cfg/vms.cfg"));
+
+      // Read the line from the file
+
+      while (reader.hasNextLine()) {
+        tempSoftware = "";
+        tempCPU = 0;
+        tempRAM = 0;
+        tempSSD = 0;
+        tempBANDWIDTH = 0;
+        tempGpu = 0;
+        // Create a regex pattern to match the key-value pairs
+        Pattern pattern = Pattern.compile("(\\w+):(\\w+)");
+
+        // Create a matcher for the line
+        Matcher matcher = pattern.matcher(reader.nextLine());
+
+        // Iterate over the matches and extract the values
+        while (matcher.find()) {
+
+          String key = matcher.group(1);
+          String value = matcher.group(2);
+
+          if (key.equals("os")) {
+            tempSoftware = value;
+
+          }
+          if (key.equals("cores")) {
+            tempCPU = Integer.parseInt(value);
+          }
+          if (key.equals("ram")) {
+            tempRAM = Integer.parseInt(value);
+          }
+          if (key.equals("ssd")) {
+            tempSSD = Integer.parseInt(value);
+          }
+          if (key.equals("bandwidth")) {
+            tempBANDWIDTH = Integer.parseInt(value);
+
+          }
+          if (key.equals("gpu")) {
+            tempGpu = Integer.parseInt(value);
+
+          }
+
+        }
+        if (tempSSD != 0) {
+          if (tempBANDWIDTH != 0 || tempGpu != 0) {
+            if (tempBANDWIDTH != 0) {
+              if (tempGpu != 0) {
+                createVmNetworkedGPU(tempCPU, tempRAM, tempSoftware, tempSSD, tempBANDWIDTH, tempGpu);
+
+              } else {
+                createVmNetworked(tempCPU, tempRAM, tempSoftware, tempSSD, tempBANDWIDTH);
+              }
+
+            } else {
+              createVmGPU(tempCPU, tempRAM, tempSoftware, tempSSD, tempGpu);
+            }
+
+          } else {
+            createPlainVm(tempCPU, tempRAM, tempSoftware, tempSSD);
+
+          }
+
+        } else {
+          createVm(tempCPU, tempRAM, tempSoftware);
+        }
+        
+
+      }
+
+      reader.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  
+}
+
 
   // VM
   public static void createVm(int VMCPU, int VMRAM, String VMSoftware) {
@@ -213,8 +305,13 @@ public class CLI {
   }
 
   // Queue
+  //==================================================================================================================================
+  public static void queuing() {
+    startqueue(numofPrograms, ProgramList);
+  }
 
-  public void startqueue(int numofPrograms, ArrayList<Programs> ProgramList) throws IOException  {
+
+  public static void startqueue(int numofPrograms, ArrayList<Programs> ProgramList)  {
     Programs[] array = new Programs[numofPrograms];
     array = ProgramList.toArray(array);
 
@@ -280,7 +377,7 @@ public class CLI {
 
   }
 
-  public int VMload(Programs Program) {
+  public static int VMload(Programs Program) {
     int CPUload = 0;
     int k = -5;
     int RAMload = 0;
@@ -354,7 +451,7 @@ public class CLI {
 
   }
 
-  public void addProgram(Programs program, int index) {
+  public static void addProgram(Programs program, int index) {
     program.getProgramStartTime();
     VMs.get(index).ExecutingProjects.add(program);
     VMs.get(index).setAllocated_CPU(VMs.get(index).getAllocated_CPU() + program.getProgramCores());
@@ -382,7 +479,7 @@ public class CLI {
 
   }
 
-  public void removeProgram(int indexofprogram, int index) {
+  public static void removeProgram(int indexofprogram, int index) {
     VMs.get(index).setAllocated_CPU(
         VMs.get(index).getAllocated_CPU() - VMs.get(index).ExecutingProjects.get(indexofprogram).getProgramCores());
     VMs.get(index).setAllocated_RAM(

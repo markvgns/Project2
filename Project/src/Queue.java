@@ -11,12 +11,12 @@ public class Queue<E> {
   }
 
   public void enQueue(E e) {
-    // Checking if queue is full before inserting new Item
+    
     if (isQueueFull()) {
       throw new IllegalStateException("Queue is Full!!");
     }
 
-    // We have to wrap the queue in case maxSize has reached
+   
 
     queueArray[(head + size) % queueArray.length] = e;
 
@@ -26,7 +26,7 @@ public class Queue<E> {
   
   
   public E deQueue() {
-    // Checking if queue is Empty before Removing new item
+    
     if (isQueueEmpty()) {
       throw new IllegalStateException("Queue is Empty!!");
     }

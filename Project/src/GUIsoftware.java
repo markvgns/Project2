@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class GUIsoftware{
@@ -48,18 +50,30 @@ public static void main(String[] args)
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            VMsFileCreator.setEnabled(false);
-
-            /*method gia file*/
-          
             
-            //----> pare Vms apo file kai bale int p=1 oste apo kato na mhn bgalei error
+            VMsFileCreator.setEnabled(false);
+           
+            File fileVM = new File("Project/src/cfg/vms.cfg");
+            
+            if (fileVM.exists()) {
+              
+               CLI.createvmfromfile();
+               LableBuilder ErrorVMFile = new LableBuilder("VMs from file have been created!", 0, 150);
+               VMFileInfo.add(ErrorVMFile);
+               VMFileInfo.repaint();
+               VMFileInfo.revalidate();
 
-            LableBuilder ErrorVMFile = new LableBuilder("No VMs found", 0, 150);
-            VMFileInfo.add(ErrorVMFile);
-            ErrorVMFile.repaint();
-            ErrorVMFile.revalidate();
+            }        
 
+                   
+                     
+            else {
+               System.out.println("6");
+               LableBuilder ErrorVMFile = new LableBuilder("No VMs found", 0, 150);
+               VMFileInfo.add(ErrorVMFile);
+               VMFileInfo.repaint();
+               VMFileInfo.revalidate();
+            }
 
          }
 
@@ -97,13 +111,18 @@ public static void main(String[] args)
          public void actionPerformed(ActionEvent e)
          {
             ProgramFileCreator.setEnabled(false);
-            //----> method gia file
+            File fileProgram = new File("src/cfg/programs.cfg");
+            if (fileProgram.exists()) {
 
-            LableBuilder ErrorProgramFile = new LableBuilder("No Programs found", 0, 150);
-            ProgramFileInfo.add(ErrorProgramFile);
+            }
+            else {
 
-            ErrorProgramFile.repaint();
-            ErrorProgramFile.revalidate();
+               LableBuilder ErrorProgramFile = new LableBuilder("No Programs found", 0, 150);
+               ProgramFileInfo.add(ErrorProgramFile);
+               ProgramFileInfo.repaint();
+               ProgramFileInfo.revalidate();
+            }
+            
          }
 
       });
@@ -638,33 +657,34 @@ public static void main(String[] args)
                            for (int i = 0; i < CLI.VMs.size(); i++) {
 
                               if (reportId == CLI.VMs.get(i).getVmId()) {
-                      
-                                if (CLI.VMs.get(i) instanceof VM) {
-                                  String reportVMinfo = CLI.VMs.get(i).getVMCPU() + " " + CLI.VMs.get(i).getVMRAM() + " " + CLI.VMs.get(i).getVMSoftware() ;
-                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
-                                  ReportVMPanel.add(reportOneVM);
-                                }
-                                if (CLI.VMs.get(i) instanceof PlainVM) {
-                                  String reportVMinfo = " " + ((PlainVM) CLI.VMs.get(i)).getPlainSSD() ;
-                                  LableBuilder reportOneVM =new LableBuilder(reportVMinfo, 0, 69);
-                                  ReportVMPanel.add(reportOneVM);
-                                }
-                                if (CLI.VMs.get(i) instanceof VmGPU) {
-                                  String reportVMinfo = " " + ((VmGPU) CLI.VMs.get(i)).getVMGPU();
-                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
-                                  ReportVMPanel.add(reportOneVM);
-                                }
-                                if (CLI.VMs.get(i) instanceof VMNetworked) {
-                                  String reportVMinfo = " " + ((VMNetworked) CLI.VMs.get(i)).getBandwidth() ;
-                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
-                                  ReportVMPanel.add(reportOneVM);
-                                }
-                                if (CLI.VMs.get(i) instanceof VMNetworkedGPU) {
-                                  String reportVMinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(i)).getNetGPU() ;
-                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
-                                  ReportVMPanel.add(reportOneVM);
-                                }
-                      
+                                 
+                                 if (CLI.VMs.get(i) instanceof VM) {
+                                    String reportVMinfo = CLI.VMs.get(i).getVMCPU() + " " + CLI.VMs.get(i).getVMRAM()
+                                          + " " + CLI.VMs.get(i).getVMSoftware();
+                                    LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                    ReportVMPanel.add(reportOneVM);
+                                 }
+                                 if (CLI.VMs.get(i) instanceof PlainVM) {
+                                    String reportVMinfo = " " + ((PlainVM) CLI.VMs.get(i)).getPlainSSD();
+                                    LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                    ReportVMPanel.add(reportOneVM);
+                                 }
+                                 if (CLI.VMs.get(i) instanceof VmGPU) {
+                                    String reportVMinfo = " " + ((VmGPU) CLI.VMs.get(i)).getVMGPU();
+                                    LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                    ReportVMPanel.add(reportOneVM);
+                                 }
+                                 if (CLI.VMs.get(i) instanceof VMNetworked) {
+                                    String reportVMinfo = " " + ((VMNetworked) CLI.VMs.get(i)).getBandwidth();
+                                    LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                    ReportVMPanel.add(reportOneVM);
+                                 }
+                                 if (CLI.VMs.get(i) instanceof VMNetworkedGPU) {
+                                    String reportVMinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(i)).getNetGPU();
+                                    LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                    ReportVMPanel.add(reportOneVM);
+                                 }
+                                
                               }
                       
                             }
@@ -863,6 +883,9 @@ public static void main(String[] args)
      SortingPanel.setBackground(Color.DARK_GRAY);
 
      LableBuilder Sortinglabel1 = new LableBuilder("Loading VMs and Programs.....", 0, 00);
+     
+      CLI.queuing();
+   
      SortingPanel.add(Sortinglabel1);
      LableBuilder Sortinglabel2 = new LableBuilder("Programs entering VMs.....", 0, 20);
      SortingPanel.add(Sortinglabel2);
