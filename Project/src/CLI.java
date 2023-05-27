@@ -231,7 +231,7 @@ public static void createProgramfromfile() {
     int pID = -5;
     while (pID < 0) {
       pID = createRandomInt();
-      System.out.println("5");
+      
     }
     Programs tempProgram = new Programs(pID, CPU, RAM, SSD, GPU, Bandwidth, ExpectedTime);
     ProgramList.add(tempProgram);
@@ -383,30 +383,35 @@ public static void createProgramfromfile() {
     Queue<Programs> BoundedQueue = new Queue<>(numofPrograms);
     //enqueue
     for (int i = 0; i < numofPrograms; i++) {
+      
       BoundedQueue.enQueue(array[i]);
     }
     whileloop:
     while (true) {
+      
       int programsadded = 0;
       //checking if a program is finished
       for (int i = 0; i < VMs.size(); i++) {
+        
         for (int j = 0; j < VMs.get(i).ExecutingProjects.size(); j++) {
-          if (VMs.get(i).ExecutingProjects.get(j).getExecutionTime() >= VMs.get(i).ExecutingProjects.get(j)
-              .getProgramExpectedTime()) {
+          System.out.println("8");
+           if (VMs.get(i).ExecutingProjects.get(j).getExecutionTime() >= VMs.get(i).ExecutingProjects.get(j)
+               .getProgramExpectedTime()) {
             System.out.println("Program " + VMs.get(i).ExecutingProjects.get(j).getpID() + "Has Finished");
-            removeProgram(j, i);
-            programsadded--;
-            if (programsadded == 0) {
+             removeProgram(j, i);
+           programsadded--;
+             if (programsadded == 0) {
               break whileloop;
-            }
+             }
 
           }
 
-        }
+         }
       }
       
+      Programs temppr = BoundedQueue.peek();
+       int k = VMload(temppr);
       
-      int k = VMload(BoundedQueue.peek());
       
       if (k != -5) {
         System.out.println("Program "+BoundedQueue.peek().getpID()+"has been loaded to a VM");
@@ -488,11 +493,11 @@ public static void createProgramfromfile() {
           if (VMs.get(i) instanceof VMNetworkedGPU) {
             tempload = (CPUload + RAMload + SSDload + GPUload + Bandwidthload) / 5;
           } else {
-            tempload = (CPUload + RAMload + SSDload + GPUload + Bandwidthload) / 4;
+            tempload = (CPUload + RAMload + SSDload + GPUload ) / 4;
           }
 
         } else {
-          tempload = (CPUload + RAMload + SSDload + GPUload + Bandwidthload) / 3;
+          tempload = (CPUload + RAMload + SSDload ) / 3;
         }
 
       } else {

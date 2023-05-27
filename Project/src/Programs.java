@@ -31,15 +31,34 @@ public class Programs implements Serializable {
 
   public double calculatePriorityOrder() {
     double order = 0;
+    double orderCores = 0;
+    double orderRAM = 0;
+    double orderSSD = 0;
+    double orderGPU = 0;
+    double orderBandwidth = 0;
     int remainingCores = ComputerCluster.Max_CPU - CLI.getREMAIN_CPU();
     int remainingRAM = ComputerCluster.Max_RAM - CLI.getREMAIN_RAM();
     int remainingSSD = ComputerCluster.Max_SSD - CLI.getREMAIN_SSD();
     int remainingGPU = ComputerCluster.Max_GPU - CLI.getREMAIN_GPU();
     int remainingBandwidth = ComputerCluster.Max_Ethernet - CLI.getREMAIN_Ethernet();
+    if (remainingCores != 0) {
+      orderCores = getProgramCores() / remainingCores;
+    }
+    if (remainingGPU != 0) {
+      orderGPU = getProgramGPU() / remainingGPU;
+    }
+    if (remainingRAM != 0) {
+      orderRAM = getProgramRAM() / remainingRAM;
+    }
+    if (remainingSSD != 0) {
+      orderSSD = getProgramSSD() / remainingSSD;
 
-    order = (getProgramCores() / remainingCores) + (getProgramRAM() / remainingRAM) +
-        (getProgramSSD() / remainingSSD) + (getProgramGPU() / remainingGPU)
-        + (getProgramBandwidth() / remainingBandwidth);
+    }
+    if (remainingBandwidth != 0) {
+      orderBandwidth = getProgramBandwidth() / remainingBandwidth;
+    }
+
+    order = orderCores + orderRAM + orderGPU + orderBandwidth + orderSSD;
 
     return order;
 
