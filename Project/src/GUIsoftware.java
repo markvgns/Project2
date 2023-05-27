@@ -49,12 +49,8 @@ public static void main(String[] args)
          public void actionPerformed(ActionEvent e)
          {
             VMsFileCreator.setEnabled(false);
-            //----> pare Vms apo file kai bale int p=1 oste apo kato na mhn bgalei error
-
-            LableBuilder ErrorVMFile = new LableBuilder("No VMs found", 0, 150);
-            VMFileInfo.add(ErrorVMFile);
-            ErrorVMFile.repaint();
-            ErrorVMFile.revalidate();
+            /*method gia file*/
+           
 
          }
 
@@ -92,7 +88,7 @@ public static void main(String[] args)
          public void actionPerformed(ActionEvent e)
          {
             ProgramFileCreator.setEnabled(false);
-            //----> pare Programss apo file kai bale int p=1 oste apo kato na mhn bgalei error
+            //----> method gia file
 
             LableBuilder ErrorProgramFile = new LableBuilder("No Programs found", 0, 150);
             ProgramFileInfo.add(ErrorProgramFile);
@@ -142,8 +138,11 @@ public static void main(String[] args)
             TextFieldBuilder numOfVMstext = new TextFieldBuilder(150, 41);
             CreateVMPanel.add(numOfVMstext);
 
-            LableBuilder CreateVMlabel2 = new LableBuilder("VMType in capital: TYPE, CPU, RAM, Software, SSD, Bandwidth, GPU", 0, 55);
+            LableBuilder CreateVMlabel2 = new LableBuilder("Enter in format: TYPE, CPU, RAM, Software, SSD, Bandwidth, GPU", 0, 55);
             CreateVMPanel.add(CreateVMlabel2);
+
+            LableBuilder CreateVMlabel3 = new LableBuilder("VMTypes: VM, PLAIN, GPU, NETWORKED, NETGPU", 0, 69);
+            CreateVMPanel.add(CreateVMlabel3);
 
             CreateVMPanel.revalidate();
             CreateVMPanel.repaint();
@@ -165,8 +164,9 @@ public static void main(String[] args)
             
                      for(int i=0;i<numofVMs;i++)
                     {
-                     int k =69;
+                     int k =87;
                      k += 14*i;
+                     
                      String VM="VM";
                      String PLAIN = "PLAIN";
                      String GPU = "GPU";
@@ -179,6 +179,8 @@ public static void main(String[] args)
 
                      TextFieldBuilder CreateVMtext = new TextFieldBuilder(50, k);
                      CreateVMPanel.add(CreateVMtext);
+                     
+                     
 
                      CreateVMPanel.revalidate();
                      CreateVMPanel.repaint();
@@ -211,7 +213,7 @@ public static void main(String[] args)
                            if(cpu > CLI.getREMAIN_CPU() || ram > CLI.getREMAIN_RAM() || ssd > CLI.getREMAIN_SSD()
                            || bandwidth > CLI.getREMAIN_Ethernet() || gpu > CLI.getREMAIN_GPU())
                            {
-                                 LableBuilder ErrorVMlabel1 = new LableBuilder("Not enough remaining cores in the cluster for the last VM", 0, 100);
+                                 LableBuilder ErrorVMlabel1 = new LableBuilder("Not enough remaining cores in the cluster for the last new VM", 0, 100);
                                  NoSpaceVMPanel.add(ErrorVMlabel1);
                                  CreateVMPanel.add(NoSpaceVMPanel); 
                                  
@@ -274,6 +276,8 @@ public static void main(String[] args)
                                        
                                        CLI.updateremaining(Fixcpu, Fixram, Fixssd, Fixbandwidth, Fixgpu);
 
+
+
                                     }
 
                                  });
@@ -332,13 +336,20 @@ public static void main(String[] args)
                            
                            CLI.updateremaining(cpu, ram, ssd, bandwidth, gpu);
 
+                                          
                            
       
+                           CreateVMPanel.revalidate();
+                           CreateVMPanel.repaint();  
+      
                         }
+                        
                      });
 
 
                     }
+
+
                     
                   }
                 
@@ -347,6 +358,47 @@ public static void main(String[] args)
 
          }
       });
+
+      ButtonBuilder checkIdButton = new ButtonBuilder("CHECK IDs", 0, 310-42);
+      CreateVMPanel.add(checkIdButton);
+
+      CreateVMPanel.revalidate();
+      CreateVMPanel.repaint();
+
+      checkIdButton.addActionListener(new ActionListener() {
+         
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            checkIdButton.setEnabled(false);
+
+            String printVMID ="";
+                           String printVMID2 = "";
+                           for(int o=0;o<CLI.VMs.size();o++)
+                           {
+                               while(o>=11) 
+                               {
+                                 printVMID2 += (o+1) + "." + CLI.VMs.get(o).getVmId() +" ";
+                                 
+                               }                            
+                              
+                               printVMID += (o+1) + "." + CLI.VMs.get(o).getVmId() +" ";
+   
+                           }
+
+                             LableBuilder VMidlabel = new LableBuilder(printVMID , 0, 310-14);
+                             CreateVMPanel.add(VMidlabel); 
+
+                             LableBuilder VMidlabel2 = new LableBuilder(printVMID2 , 0, 310);
+                             CreateVMPanel.add(VMidlabel2);    
+
+                             CreateVMPanel.revalidate();
+                             CreateVMPanel.repaint();
+         }
+
+      });
+     
+
       ButtonBuilder UpdateVMButton = new ButtonBuilder("Update VM", 110, 15);
       //---> kodikas gia update
       UpdateVMButton.addActionListener(new ActionListener() {
@@ -803,7 +855,7 @@ public static void main(String[] args)
 
      LableBuilder Sortinglabel1 = new LableBuilder("Loading VMs and Programs.....", 0, 00);
      SortingPanel.add(Sortinglabel1);
-     LableBuilder Sortinglabel2 = new LableBuilder("Sorting.....", 0, 20);
+     LableBuilder Sortinglabel2 = new LableBuilder("Programs entering VMs.....", 0, 20);
      SortingPanel.add(Sortinglabel2);
      LableBuilder Sortinglabel3 = new LableBuilder("Done!", 0, 40);
      SortingPanel.add(Sortinglabel3);
@@ -858,16 +910,187 @@ public static void main(String[] args)
 
      //if(Programs rejected)
      {
-         PanelBuilder RejectedProgramPanel = new PanelBuilder(0, 145, 715, 725);
+         PanelBuilder RejectedProgramPanel = new PanelBuilder(0, 145, 315, 725);
          RejectedProgramPanel.setBackground(Color.DARK_GRAY);
          ThirdFrame.add(RejectedProgramPanel);
+
+         PanelBuilder ReportProgramPanel = new PanelBuilder(330, 145, 315, 725);
+         ReportProgramPanel.setBackground(Color.DARK_GRAY);
+         ThirdFrame.add(ReportProgramPanel);
+
+         LableBuilder Reportlabel1 = new LableBuilder("Make a final report:", 0, 0);
+         ReportProgramPanel.add(Reportlabel1);
+
+         ButtonBuilder FinalReportButton = new ButtonBuilder("Report",0, 15);
+         ReportProgramPanel.add(FinalReportButton);
+
+         ReportProgramPanel.repaint();
+         ReportProgramPanel.revalidate();
+
+         FinalReportButton.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+
+               FinalReportButton.setEnabled(false);
+
+               LableBuilder FinalReportlabel1 = new LableBuilder("Enter 0 for single report or 1 for Full report:", 0, 41);
+            ReportProgramPanel.add(FinalReportlabel1);
+
+            TextFieldBuilder FinalReporttext1 = new TextFieldBuilder(180, 42);
+            ReportProgramPanel.add(FinalReporttext1);
+
+            ReportProgramPanel.revalidate();
+            ReportProgramPanel.repaint();
+
+            FinalReporttext1.addActionListener(new ActionListener() {
+               
+               @Override
+               public void actionPerformed(ActionEvent e)
+               {
+
+                  FinalReporttext1.setEnabled(false);
+
+                  String Finalchoice = FinalReporttext1.getText();
+                  Scanner FinalidreportScanner = new Scanner(Finalchoice);
+
+                  int FinalchoiceInput = FinalidreportScanner.nextInt();
+
+                  FinalidreportScanner.close();
+                  
+                  ReportProgramPanel.revalidate();
+                  ReportProgramPanel.repaint();
+                 
+                  
+                  if(FinalchoiceInput == 0)
+                  {
+                     LableBuilder FinalReportlabel2 = new LableBuilder("Enter ID of VM you want to report:", 0, 55);
+                     ReportProgramPanel.add(FinalReportlabel2);
+
+                     TextFieldBuilder FinalReporttext2 = new TextFieldBuilder(145, 56);
+                     ReportProgramPanel.add(FinalReporttext2);
+
+                     ReportProgramPanel.revalidate();
+                     ReportProgramPanel.repaint();
+
+                     FinalReporttext2.addActionListener(new ActionListener() {
+                        
+                        @Override
+                        public void actionPerformed(ActionEvent e)
+                        {
+                           FinalReporttext2.setEnabled(false);
+
+                           String Finalidforreport = FinalReporttext2.getText();
+                           Scanner Finalreportscanner = new Scanner(Finalidforreport);
+
+                           int FinalreportId = Finalreportscanner.nextInt();
+
+                           Finalreportscanner.close();
+
+                           ReportVMPanel.revalidate();
+                           ReportVMPanel.repaint();
+
+                           for (int i = 0; i < CLI.VMs.size(); i++) {
+
+                              if (FinalreportId == CLI.VMs.get(i).getVmId()) {
+                      
+                                if (CLI.VMs.get(i) instanceof VM) {
+                                  String reportVMinfo = CLI.VMs.get(i).getVMCPU() + " " + CLI.VMs.get(i).getVMRAM() + " " + CLI.VMs.get(i).getVMSoftware() ;
+                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                  ReportVMPanel.add(reportOneVM);
+                                }
+                                if (CLI.VMs.get(i) instanceof PlainVM) {
+                                  String reportVMinfo = " " + ((PlainVM) CLI.VMs.get(i)).getPlainSSD() ;
+                                  LableBuilder reportOneVM =new LableBuilder(reportVMinfo, 0, 69);
+                                  ReportVMPanel.add(reportOneVM);
+                                }
+                                if (CLI.VMs.get(i) instanceof VmGPU) {
+                                  String reportVMinfo = " " + ((VmGPU) CLI.VMs.get(i)).getVMGPU();
+                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                  ReportVMPanel.add(reportOneVM);
+                                }
+                                if (CLI.VMs.get(i) instanceof VMNetworked) {
+                                  String reportVMinfo = " " + ((VMNetworked) CLI.VMs.get(i)).getBandwidth() ;
+                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                  ReportVMPanel.add(reportOneVM);
+                                }
+                                if (CLI.VMs.get(i) instanceof VMNetworkedGPU) {
+                                  String reportVMinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(i)).getNetGPU() ;
+                                  LableBuilder reportOneVM = new LableBuilder(reportVMinfo, 0, 69);
+                                  ReportVMPanel.add(reportOneVM);
+                                }
+                      
+                              }
+                      
+                            }
+
+
+                        }
+
+                     });
+
+                  }else if(FinalchoiceInput == 1)
+                  {
+
+                     for (int j = 0; j < CLI.VMs.size(); j++) {
+
+                        int p =69;
+                        p += 14*j;
+                
+                
+                        if (CLI.VMs.get(j) instanceof VM) {
+                           String reportinfo = CLI.VMs.get(j).getVMCPU() + " " + CLI.VMs.get(j).getVMRAM() + " " + CLI.VMs.get(j).getVMSoftware() ; 
+                           LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
+                           ReportVMPanel.add(reportAllVM);
+                
+                        }
+                        if (CLI.VMs.get(j) instanceof PlainVM) {
+                           String reportinfo = " " + ((PlainVM) CLI.VMs.get(j)).getPlainSSD() ; 
+                          
+                          LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
+                          ReportVMPanel.add(reportAllVM);
+                        }
+                        if (CLI.VMs.get(j) instanceof VmGPU) {
+                           String reportinfo = " " + ((VmGPU) CLI.VMs.get(j)).getVMGPU() ;
+                          
+                          LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
+                          ReportVMPanel.add(reportAllVM);
+                        }
+                        if (CLI.VMs.get(j) instanceof VMNetworked) {
+                           String reportinfo = " " + ((VMNetworked) CLI.VMs.get(j)).getBandwidth() ; 
+                          
+                          LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
+                          ReportVMPanel.add(reportAllVM);
+                        }
+                        if (CLI.VMs.get(j) instanceof VMNetworkedGPU) {
+                           String reportinfo = " " + ((VMNetworkedGPU) CLI.VMs.get(j)).getNetGPU(); 
+                          
+                          LableBuilder reportAllVM = new LableBuilder(reportinfo, 0, p);
+                          ReportVMPanel.add(reportAllVM);
+                        }
+                
+                      }
+
+                  }
+
+                  ReportProgramPanel.revalidate();
+                  ReportProgramPanel.repaint();
+
+               }
+
+            });
+
+            }
+
+         });
 
          LableBuilder Rejectedlabel1 = new LableBuilder("These Programs got rejected and placed on the File:", 0, 0);
          RejectedProgramPanel.add(Rejectedlabel1);
 
          //---> kodikas pou pernai id ton Programs pou eginan rrejected kai ta bazei na kanoun print me loop messenger
 
-         ButtonBuilder RejectedButton = new ButtonBuilder("Ok", 450, 370);
+         ButtonBuilder RejectedButton = new ButtonBuilder("Ok", 200, 400);
          RejectedProgramPanel.add(RejectedButton);
          RejectedButton.addActionListener(new ActionListener() {
             
@@ -941,3 +1164,8 @@ public static void main(String[] args)
  }
 
 }
+
+
+
+
+
