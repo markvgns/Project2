@@ -1,7 +1,7 @@
 public class VmGPU extends PlainVM {
   private int VMGPU;
 
-  private int Allocated_GPU;
+  private int Allocated_GPU=0;
 
   public VmGPU(int VmId, int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int VMGPU) {
     super(VmId, VMCPU, VMRAM, VMSoftware, PlainSSD);

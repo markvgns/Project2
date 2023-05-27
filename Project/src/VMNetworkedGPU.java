@@ -1,7 +1,7 @@
 public class VMNetworkedGPU extends VMNetworked {
   private int NetGPU;
 
-  private int Allocated_NetGPU;
+  private int Allocated_NetGPU=0;
 
   public VMNetworkedGPU(int VmId, int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth, int NetGPU) {
     super(VmId, VMCPU, VMRAM, VMSoftware, PlainSSD, Bandwidth);

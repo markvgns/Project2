@@ -1,7 +1,7 @@
 public class VMNetworked extends PlainVM {
   private int Bandwidth;
 
-  private int Allocated_Bandwidth;
+  private int Allocated_Bandwidth=0;
 
   public VMNetworked(int VmId, int VMCPU, int VMRAM, String VMSoftware, int PlainSSD, int Bandwidth) {
     super(VmId, VMCPU, VMRAM, VMSoftware, PlainSSD);

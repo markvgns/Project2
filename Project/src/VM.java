@@ -5,8 +5,8 @@ public class VM extends ComputerCluster {
   private int VMCPU;
   private int VMRAM;
   private String VMSoftware;
-  private int Allocated_CPU;
-  private int Allocated_RAM;
+  private int Allocated_CPU=0;
+  private int Allocated_RAM=0;
 
   LinkedList<Programs> ExecutingProjects = new LinkedList<>();
 
