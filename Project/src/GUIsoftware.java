@@ -211,7 +211,7 @@ public static void main(String[] args)
                            if(cpu > CLI.getREMAIN_CPU() || ram > CLI.getREMAIN_RAM() || ssd > CLI.getREMAIN_SSD()
                            || bandwidth > CLI.getREMAIN_Ethernet() || gpu > CLI.getREMAIN_GPU())
                            {
-                                 LableBuilder ErrorVMlabel1 = new LableBuilder("Not enough remaining cores in the cluster for the last new VM", 0, 100);
+                                 LableBuilder ErrorVMlabel1 = new LableBuilder("Not enough remaining cores in the cluster for the last VM", 0, 100);
                                  NoSpaceVMPanel.add(ErrorVMlabel1);
                                  CreateVMPanel.add(NoSpaceVMPanel); 
                                  
