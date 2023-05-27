@@ -43,7 +43,7 @@ public class CLI {
     int tempGpu;
     
     try {
-      Scanner reader = new Scanner(new FileReader("Project/src/cfg/vms.cfg"));
+      Scanner reader = new Scanner(new FileReader("Project/src/cfg/vms.config"));
 
       // Read the line from the file
 
@@ -122,7 +122,71 @@ public class CLI {
   
 }
 
+public static void createProgramfromfile() {
+  int tempCPU;
+  int tempRAM;
+  int tempSSD;
+  int tempBANDWIDTH;
+  int tempGpu;
+  int tempTime;
 
+  try {
+    Scanner reader = new Scanner(new FileReader("Project/src/cfg/vms.config"));
+
+    // Read the line from the file
+
+    while (reader.hasNextLine()) {
+      tempTime = 0;
+      tempCPU = 0;
+      tempRAM = 0;
+      tempSSD = 0;
+      tempBANDWIDTH = 0;
+      tempGpu = 0;
+      // Create a regex pattern to match the key-value pairs
+      Pattern pattern = Pattern.compile("(\\w+):(\\w+)");
+
+      // Create a matcher for the line
+      Matcher matcher = pattern.matcher(reader.nextLine());
+
+      // Iterate over the matches and extract the values
+      while (matcher.find()) {
+
+        String key = matcher.group(1);
+        String value = matcher.group(2);
+
+        if (key.equals("time")) {
+          tempTime = Integer.parseInt(value);
+        }
+        if (key.equals("cores")) {
+          tempCPU = Integer.parseInt(value);
+        }
+        if (key.equals("ram")) {
+          tempRAM = Integer.parseInt(value);
+        }
+        if (key.equals("ssd")) {
+          tempSSD = Integer.parseInt(value);
+        }
+        if (key.equals("bandwidth")) {
+          tempBANDWIDTH = Integer.parseInt(value);
+
+        }
+        if (key.equals("gpu")) {
+          tempGpu = Integer.parseInt(value);
+
+        }
+
+      }
+      createProgram(tempCPU, tempRAM, tempSSD, tempGpu, tempBANDWIDTH, tempTime);
+   
+
+    }
+
+    reader.close();
+  } catch (IOException e) {
+    e.printStackTrace();
+  }
+  
+}
   // VM
   public static void createVm(int VMCPU, int VMRAM, String VMSoftware) {
     int VmID = createRandomInt();
@@ -167,6 +231,7 @@ public class CLI {
     int pID = -5;
     while (pID < 0) {
       pID = createRandomInt();
+      System.out.println("5");
     }
     Programs tempProgram = new Programs(pID, CPU, RAM, SSD, GPU, Bandwidth, ExpectedTime);
     ProgramList.add(tempProgram);

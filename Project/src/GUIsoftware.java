@@ -53,7 +53,7 @@ public static void main(String[] args)
             
             VMsFileCreator.setEnabled(false);
            
-            File fileVM = new File("Project/src/cfg/vms.cfg");
+            File fileVM = new File("Project/src/cfg/vms.config");
             
             if (fileVM.exists()) {
               
@@ -111,8 +111,13 @@ public static void main(String[] args)
          public void actionPerformed(ActionEvent e)
          {
             ProgramFileCreator.setEnabled(false);
-            File fileProgram = new File("src/cfg/programs.cfg");
+            File fileProgram = new File("Project/src/cfg/programs.config");
             if (fileProgram.exists()) {
+               CLI.createProgramfromfile();
+               LableBuilder ErrorProgramFile = new LableBuilder("Programs have been created", 0, 150);
+               ProgramFileInfo.add(ErrorProgramFile);
+               ProgramFileInfo.repaint();
+               ProgramFileInfo.revalidate();
 
             }
             else {

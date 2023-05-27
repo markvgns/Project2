@@ -3,6 +3,7 @@
 - stin report vale ta allocated
 -stin report cpu: ram:
 -abstract
+-divide by zero
 
 -sleeping sto gui 
 
