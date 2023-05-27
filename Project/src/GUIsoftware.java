@@ -62,14 +62,14 @@ public static void main(String[] args)
     
     
     
-      PanelBuilder ProjectFileInfo = new PanelBuilder(310, 0, 330, 725);
-      ProjectFileInfo.setBackground(Color.DARK_GRAY);
-      FileInfo.add(ProjectFileInfo);
+      PanelBuilder ProgramFileInfo = new PanelBuilder(310, 0, 330, 725);
+      ProgramFileInfo.setBackground(Color.DARK_GRAY);
+      FileInfo.add(ProgramFileInfo);
 
-       ButtonBuilder ProjectFileButton = new ButtonBuilder("Next", 100, 525);
-       ProjectFileInfo.add(ProjectFileButton);
+       ButtonBuilder ProgramFileButton = new ButtonBuilder("Next", 100, 525);
+       ProgramFileInfo.add(ProgramFileButton);
       //----> kodikas gia epomeno frame
-      ProjectFileButton.addActionListener(new ActionListener() {
+      ProgramFileButton.addActionListener(new ActionListener() {
        @Override
        public void actionPerformed(ActionEvent e)
        {
@@ -79,26 +79,26 @@ public static void main(String[] args)
        });
       
 
-      LableBuilder ProjectFilelabel = new LableBuilder("Create Projects from File:", 0, 0);
-      ProjectFileInfo.add(ProjectFilelabel);
+      LableBuilder ProgramFilelabel = new LableBuilder("Create Programs from File:", 0, 0);
+      ProgramFileInfo.add(ProgramFilelabel);
 
-      ButtonBuilder ProjectFileCreator = new ButtonBuilder("Get from File", 100, 100);
-      ProjectFileCreator.setBounds(100, 100, 125, 25);
-      ProjectFileInfo.add(ProjectFileCreator);
+      ButtonBuilder ProgramFileCreator = new ButtonBuilder("Get from File", 100, 100);
+      ProgramFileCreator.setBounds(100, 100, 125, 25);
+      ProgramFileInfo.add(ProgramFileCreator);
 
-      ProjectFileCreator.addActionListener(new ActionListener() {
+      ProgramFileCreator.addActionListener(new ActionListener() {
          
          @Override
          public void actionPerformed(ActionEvent e)
          {
-            ProjectFileCreator.setEnabled(false);
-            //----> pare Projectss apo file kai bale int p=1 oste apo kato na mhn bgalei error
+            ProgramFileCreator.setEnabled(false);
+            //----> pare Programss apo file kai bale int p=1 oste apo kato na mhn bgalei error
 
-            LableBuilder ErrorProjectFile = new LableBuilder("No Projects found", 0, 150);
-            ProjectFileInfo.add(ErrorProjectFile);
+            LableBuilder ErrorProgramFile = new LableBuilder("No Programs found", 0, 150);
+            ProgramFileInfo.add(ErrorProgramFile);
 
-            ErrorProjectFile.repaint();
-            ErrorProjectFile.revalidate();
+            ErrorProgramFile.repaint();
+            ErrorProgramFile.revalidate();
          }
 
       });
@@ -677,49 +677,49 @@ public static void main(String[] args)
             InitialFrame.dispose();
 
 
-            FrameBuilder SecondFrame = new FrameBuilder("Project software");
+            FrameBuilder SecondFrame = new FrameBuilder("Program software");
 
 
 
-            PanelBuilder CreateProjectPanel = new PanelBuilder(0, 0, 315, 145);
-     CreateProjectPanel.setBackground(Color.DARK_GRAY);
-     PanelBuilder CreateProjectPanel2 = new PanelBuilder(0, 145, 715, 725);
-     CreateProjectPanel2.setBackground(Color.DARK_GRAY);
-     PanelBuilder DoneProjectPanel = new PanelBuilder(335, 0, 315, 130);
-     DoneProjectPanel.setBackground(Color.DARK_GRAY);
-     PanelBuilder NoSpaceProjectPanel = new PanelBuilder(20, 100, 600, 110);
-     NoSpaceProjectPanel.setBackground(Color.GRAY);
+            PanelBuilder CreateProgramPanel = new PanelBuilder(0, 0, 315, 145);
+     CreateProgramPanel.setBackground(Color.DARK_GRAY);
+     PanelBuilder CreateProgramPanel2 = new PanelBuilder(0, 145, 715, 725);
+     CreateProgramPanel2.setBackground(Color.DARK_GRAY);
+     PanelBuilder DoneProgramPanel = new PanelBuilder(335, 0, 315, 130);
+     DoneProgramPanel.setBackground(Color.DARK_GRAY);
+     PanelBuilder NoSpaceProgramPanel = new PanelBuilder(20, 100, 600, 110);
+     NoSpaceProgramPanel.setBackground(Color.GRAY);
 
-     ButtonBuilder CreateProjectButton = new ButtonBuilder("Create Project", 75, 35);
-     CreateProjectButton.setSize(150, 30);
-     //---> kodikas gia create project
+     ButtonBuilder CreateProgramButton = new ButtonBuilder("Create Program", 75, 35);
+     CreateProgramButton.setSize(150, 30);
+     //---> kodikas gia create Program
 
-     CreateProjectButton.addActionListener(new ActionListener() {
+     CreateProgramButton.addActionListener(new ActionListener() {
       
       @Override
       public void actionPerformed(ActionEvent e)
       {
 
-         CreateProjectButton.setEnabled(false);
+         CreateProgramButton.setEnabled(false);
 
-         LableBuilder CreateProjectlabel1 = new LableBuilder("Enter number of Projects for creation:", 0, 0);
-         CreateProjectPanel2.add(CreateProjectlabel1);
+         LableBuilder CreateProgramlabel1 = new LableBuilder("Enter number of Programs for creation:", 0, 0);
+         CreateProgramPanel2.add(CreateProgramlabel1);
 
-         TextFieldBuilder NumofProjectText = new TextFieldBuilder(160, 0);
-         CreateProjectPanel2.add(NumofProjectText);
+         TextFieldBuilder NumofProgramText = new TextFieldBuilder(160, 0);
+         CreateProgramPanel2.add(NumofProgramText);
 
-         CreateProjectPanel2.revalidate();
-         CreateProjectPanel2.repaint();
+         CreateProgramPanel2.revalidate();
+         CreateProgramPanel2.repaint();
 
-         NumofProjectText.addActionListener(new ActionListener() {
+         NumofProgramText.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e)
             {
-               NumofProjectText.setEnabled(false);
+               NumofProgramText.setEnabled(false);
 
-               String numofprojects = NumofProjectText.getText();
-               Scanner numofprojScanner = new Scanner(numofprojects);
+               String numofPrograms = NumofProgramText.getText();
+               Scanner numofprojScanner = new Scanner(numofPrograms);
                int projNum = numofprojScanner.nextInt();
                numofprojScanner.close();
 
@@ -728,49 +728,49 @@ public static void main(String[] args)
                   int k = 14;
                   k += 14*i;
 
-                  LableBuilder CreateProjectlabel2 = new LableBuilder("Enter in format (CPU, RAM, SSD, GPU, Bandwidth, ExpectedTime):", 0, k);
-                  CreateProjectPanel2.add(CreateProjectlabel2);
+                  LableBuilder CreateProgramlabel2 = new LableBuilder("Enter in format (CPU, RAM, SSD, GPU, Bandwidth, ExpectedTime):", 0, k);
+                  CreateProgramPanel2.add(CreateProgramlabel2);
 
-                  TextFieldBuilder ProjectCorestext = new TextFieldBuilder(290, k);
-                  CreateProjectPanel2.add(ProjectCorestext);
+                  TextFieldBuilder ProgramCorestext = new TextFieldBuilder(290, k);
+                  CreateProgramPanel2.add(ProgramCorestext);
 
-                  CreateProjectPanel2.revalidate();
-                  CreateProjectPanel2.repaint();
+                  CreateProgramPanel2.revalidate();
+                  CreateProgramPanel2.repaint();
 
-                  ProjectCorestext.addActionListener(new ActionListener() {
+                  ProgramCorestext.addActionListener(new ActionListener() {
                   
                      @Override
                      public void actionPerformed(ActionEvent e)
                      {
    
-                        ProjectCorestext.setEnabled(false);
+                        ProgramCorestext.setEnabled(false);
 
-                        String projectinfo = ProjectCorestext.getText();
-                        Scanner projectcoreScanner = new Scanner(projectinfo);
-                        projectcoreScanner.useDelimiter(",\\s*");
+                        String Programinfo = ProgramCorestext.getText();
+                        Scanner ProgramcoreScanner = new Scanner(Programinfo);
+                        ProgramcoreScanner.useDelimiter(",\\s*");
 
-                        int cores = Integer.parseInt(projectcoreScanner.next());
-                        int ram =Integer.parseInt(projectcoreScanner.next());
-                        int ssd = Integer.parseInt(projectcoreScanner.next());
-                        int gpu = Integer.parseInt(projectcoreScanner.next());
-                        int bandwidth = Integer.parseInt(projectcoreScanner.next());
-                        int expectedtime = Integer.parseInt(projectcoreScanner.next());
+                        int cores = Integer.parseInt(ProgramcoreScanner.next());
+                        int ram =Integer.parseInt(ProgramcoreScanner.next());
+                        int ssd = Integer.parseInt(ProgramcoreScanner.next());
+                        int gpu = Integer.parseInt(ProgramcoreScanner.next());
+                        int bandwidth = Integer.parseInt(ProgramcoreScanner.next());
+                        int expectedtime = Integer.parseInt(ProgramcoreScanner.next());
 
-                        projectcoreScanner.close();
+                        ProgramcoreScanner.close();
 
                         CLI.createProgram(cores, ram, ssd, gpu, bandwidth, expectedtime);
 
    
-                        CreateProjectPanel2.revalidate();
-                        CreateProjectPanel2.repaint();
+                        CreateProgramPanel2.revalidate();
+                        CreateProgramPanel2.repaint();
                      }
    
                   });
 
                }
 
-               CreateProjectPanel2.revalidate();
-               CreateProjectPanel2.repaint();
+               CreateProgramPanel2.revalidate();
+               CreateProgramPanel2.repaint();
 
 
 
@@ -784,14 +784,14 @@ public static void main(String[] args)
 
      });
 
-     ButtonBuilder DoneProjectButton = new ButtonBuilder("Next", 100, 35);
+     ButtonBuilder DoneProgramButton = new ButtonBuilder("Next", 100, 35);
      //-----> kodikas gia epomeno frame
-     DoneProjectButton.addActionListener(new ActionListener() {
+     DoneProgramButton.addActionListener(new ActionListener() {
       
       @Override
       public void actionPerformed(ActionEvent e)
       {
-         DoneProjectButton.setEnabled(false);
+         DoneProgramButton.setEnabled(false);
          SecondFrame.dispose();
 
          FrameBuilder ThirdFrame = new FrameBuilder("Concluding...");
@@ -801,7 +801,7 @@ public static void main(String[] args)
      PanelBuilder SortingPanel = new PanelBuilder(0, 0, 315, 130);
      SortingPanel.setBackground(Color.DARK_GRAY);
 
-     LableBuilder Sortinglabel1 = new LableBuilder("Loading VMs and projects.....", 0, 00);
+     LableBuilder Sortinglabel1 = new LableBuilder("Loading VMs and Programs.....", 0, 00);
      SortingPanel.add(Sortinglabel1);
      LableBuilder Sortinglabel2 = new LableBuilder("Sorting.....", 0, 20);
      SortingPanel.add(Sortinglabel2);
@@ -856,25 +856,25 @@ public static void main(String[] args)
      
      
 
-     //if(projects rejected)
+     //if(Programs rejected)
      {
-         PanelBuilder RejectedProjectPanel = new PanelBuilder(0, 145, 715, 725);
-         RejectedProjectPanel.setBackground(Color.DARK_GRAY);
-         ThirdFrame.add(RejectedProjectPanel);
+         PanelBuilder RejectedProgramPanel = new PanelBuilder(0, 145, 715, 725);
+         RejectedProgramPanel.setBackground(Color.DARK_GRAY);
+         ThirdFrame.add(RejectedProgramPanel);
 
-         LableBuilder Rejectedlabel1 = new LableBuilder("These projects got rejected and placed on the File:", 0, 0);
-         RejectedProjectPanel.add(Rejectedlabel1);
+         LableBuilder Rejectedlabel1 = new LableBuilder("These Programs got rejected and placed on the File:", 0, 0);
+         RejectedProgramPanel.add(Rejectedlabel1);
 
-         //---> kodikas pou pernai id ton projects pou eginan rrejected kai ta bazei na kanoun print me loop messenger
+         //---> kodikas pou pernai id ton Programs pou eginan rrejected kai ta bazei na kanoun print me loop messenger
 
          ButtonBuilder RejectedButton = new ButtonBuilder("Ok", 450, 370);
-         RejectedProjectPanel.add(RejectedButton);
+         RejectedProgramPanel.add(RejectedButton);
          RejectedButton.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e)
             {
-               ThirdFrame.remove(RejectedProjectPanel);
+               ThirdFrame.remove(RejectedProgramPanel);
 
                ThirdFrame.revalidate();
                ThirdFrame.repaint();
@@ -894,13 +894,13 @@ public static void main(String[] args)
 
      });
 
-     CreateProjectPanel.add(CreateProjectButton);
-     DoneProjectPanel.add(DoneProjectButton);
+     CreateProgramPanel.add(CreateProgramButton);
+     DoneProgramPanel.add(DoneProgramButton);
 
      
-     SecondFrame.add(CreateProjectPanel);
-     SecondFrame.add(DoneProjectPanel);
-     SecondFrame.add(CreateProjectPanel2);
+     SecondFrame.add(CreateProgramPanel);
+     SecondFrame.add(DoneProgramPanel);
+     SecondFrame.add(CreateProgramPanel2);
      
 
 
