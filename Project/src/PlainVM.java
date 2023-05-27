@@ -1,7 +1,7 @@
 public class PlainVM extends VM {
   private int PlainSSD;
 
-  private int Allocated_SSD;
+  private int Allocated_SSD=0;
 
   public PlainVM(int VmId, int VMCPU, int VMRAM, String VMSoftware, int PlainSSD) {
     super(VmId, VMCPU, VMRAM, VMSoftware);

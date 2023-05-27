@@ -49,6 +49,7 @@ public static void main(String[] args)
          public void actionPerformed(ActionEvent e)
          {
             VMsFileCreator.setEnabled(false);
+            
             //----> pare Vms apo file kai bale int p=1 oste apo kato na mhn bgalei error
 
             LableBuilder ErrorVMFile = new LableBuilder("No VMs found", 0, 150);

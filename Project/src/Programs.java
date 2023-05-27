@@ -1,5 +1,9 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Programs {
+public class Programs implements Serializable {
   private int pID;
   private int ProgramCores = 0;
   private int ProgramRAM = 0;
@@ -39,6 +43,18 @@ public class Programs {
 
     return order;
 
+  }
+
+  public void serialization() {
+    try{FileOutputStream fileOut = new FileOutputStream(" src / log / rejected.out");
+    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+    out.writeObject(this);
+    out.close();
+    fileOut.close();
+  } catch (IOException e) {
+    System.out.println("can't serialize the program");
+  }
+  
   }
 
   public void getProgramStartTime() {

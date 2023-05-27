@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.Random;
-
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.concurrent.*;
 
 
@@ -210,7 +214,7 @@ public class CLI {
 
   // Queue
 
-  public void startqueue(int numofPrograms, ArrayList<Programs> ProgramList) {
+  public void startqueue(int numofPrograms, ArrayList<Programs> ProgramList) throws IOException  {
     Programs[] array = new Programs[numofPrograms];
     array = ProgramList.toArray(array);
 
@@ -227,6 +231,7 @@ public class CLI {
         for (int j = 0; j < VMs.get(i).ExecutingProjects.size(); j++) {
           if (VMs.get(i).ExecutingProjects.get(j).getExecutionTime() >= VMs.get(i).ExecutingProjects.get(j)
               .getProgramExpectedTime()) {
+            System.out.println("Program " + VMs.get(i).ExecutingProjects.get(j).getpID() + "Has Finished");
             removeProgram(j, i);
             programsadded--;
             if (programsadded == 0) {
@@ -238,9 +243,11 @@ public class CLI {
         }
       }
       
+      
       int k = VMload(BoundedQueue.peek());
       
       if (k != -5) {
+        System.out.println("Program "+BoundedQueue.peek().getpID()+"has been loaded to a VM");
         addProgram(BoundedQueue.deQueue(), k);
         
         programsadded++;
@@ -259,6 +266,10 @@ public class CLI {
               System.out.println(e.getMessage());
           }
         } else {
+          Programs temp = BoundedQueue.deQueue();
+          temp.serialization();
+          
+          
           //kai kane pop
           // steile to se arxeio
         }
