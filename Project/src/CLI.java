@@ -131,7 +131,7 @@ public static void createProgramfromfile() {
   int tempTime;
 
   try {
-    Scanner reader = new Scanner(new FileReader("Project/src/cfg/vms.config"));
+    Scanner reader = new Scanner(new FileReader("Project/src/cfg/programs.config"));
 
     // Read the line from the file
 
@@ -176,6 +176,7 @@ public static void createProgramfromfile() {
         }
 
       }
+      
       createProgram(tempCPU, tempRAM, tempSSD, tempGpu, tempBANDWIDTH, tempTime);
    
 
@@ -379,7 +380,7 @@ public static void createProgramfromfile() {
   public static void startqueue(int numofPrograms, ArrayList<Programs> ProgramList)  {
     Programs[] array = new Programs[numofPrograms];
     array = ProgramList.toArray(array);
-
+    int programsadded = 0;
     Queue<Programs> BoundedQueue = new Queue<>(numofPrograms);
     //enqueue
     for (int i = 0; i < numofPrograms; i++) {
@@ -389,17 +390,23 @@ public static void createProgramfromfile() {
     whileloop:
     while (true) {
       
-      int programsadded = 0;
+      
       //checking if a program is finished
       for (int i = 0; i < VMs.size(); i++) {
         
         for (int j = 0; j < VMs.get(i).ExecutingProjects.size(); j++) {
-          System.out.println("8");
+          
+          
            if (VMs.get(i).ExecutingProjects.get(j).getExecutionTime() >= VMs.get(i).ExecutingProjects.get(j)
                .getProgramExpectedTime()) {
-            System.out.println("Program " + VMs.get(i).ExecutingProjects.get(j).getpID() + "Has Finished");
-             removeProgram(j, i);
-           programsadded--;
+                
+            System.out.println("Program " + VMs.get(i).ExecutingProjects.get(j).getpID() + " Has Finished after "+ VMs
+                .get(i).ExecutingProjects.get(j).getExecutionTime()+ " seconds!");
+            removeProgram(j, i);
+             
+            programsadded-=1;
+            
+           
              if (programsadded == 0) {
               break whileloop;
              }
@@ -408,39 +415,42 @@ public static void createProgramfromfile() {
 
          }
       }
-      
-      Programs temppr = BoundedQueue.peek();
-       int k = VMload(temppr);
-      
-      
-      if (k != -5) {
-        System.out.println("Program "+BoundedQueue.peek().getpID()+"has been loaded to a VM");
-        addProgram(BoundedQueue.deQueue(), k);
+        if (!(BoundedQueue.isQueueEmpty())) {
+        Programs temppr = BoundedQueue.peek();
+         int k = VMload(temppr);
         
-        programsadded++;
-      } else {
-        Programs tempProgram = BoundedQueue.peek();
-        tempProgram.setRejectedTimes(tempProgram.getRejectedTimes()+1);
-        if (BoundedQueue.peek().getRejectedTimes() < 3) {
-          BoundedQueue.totheback(tempProgram);
-          //sleeping
-          long timetosleep = 2L;
-          TimeUnit time = TimeUnit.SECONDS;
-          try{
-            time.sleep(timetosleep);
-          }
-          catch(InterruptedException e){
-              System.out.println(e.getMessage());
-          }
-        } else {
-          Programs temp = BoundedQueue.deQueue();
-          temp.serialization();
-          
-          
-          //kai kane pop
-          // steile to se arxeio
-        }
 
+        if (k != -5) {
+          System.out.println("Program " + BoundedQueue.peek().getpID() + " has been loaded to a VM");
+          programsadded++;
+          
+          addProgram(BoundedQueue.deQueue(), k);
+
+        } else {
+          Programs tempProgram = BoundedQueue.peek();
+          tempProgram.setRejectedTimes(tempProgram.getRejectedTimes() + 1);
+          if (tempProgram.getRejectedTimes() < 3) {
+            BoundedQueue.deQueue();
+            
+            BoundedQueue.totheback(tempProgram);
+            //sleeping
+            long timetosleep = 2L;
+            TimeUnit time = TimeUnit.SECONDS;
+            try {
+              time.sleep(timetosleep);
+            } catch (InterruptedException e) {
+              System.out.println(e.getMessage());
+            }
+          } else {
+            
+            Programs temp = BoundedQueue.deQueue();
+            temp.serialization();
+
+            //kai kane pop
+            // steile to se arxeio
+          }
+
+        }
       }
 
     }
@@ -458,7 +468,7 @@ public static void createProgramfromfile() {
     double minLoad = 1;
     
 
-    for (int i = 0; i <= VMs.size(); i++) {
+    for (int i = 0; i < VMs.size(); i++) {
 
       CPUload = (Program.getProgramCores() + VMs.get(i).getAllocated_CPU()) / VMs.get(i).getVMCPU();
 
