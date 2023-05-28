@@ -3,8 +3,8 @@
 - stin report vale ta allocated
 -stin report cpu: ram:
 -abstract
--divide by zero
-
+-rejected arxeia (pairnei id apo programmata p eginan rejected)
+-seira sta queue
 -sleeping sto gui 
 
 -cpu ram

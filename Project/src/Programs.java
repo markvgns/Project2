@@ -65,9 +65,13 @@ public class Programs implements Serializable {
   }
 
   public void serialization() {
-    try{FileOutputStream fileOut = new FileOutputStream(" src / log / rejected.out");
+    try {
+      
+      FileOutputStream fileOut = new FileOutputStream("Project/src/log/rejected.out");
+    
     ObjectOutputStream out = new ObjectOutputStream(fileOut);
     out.writeObject(this);
+    System.out.println("Program "+this.pID+" has been rejected 3 times and serialized!");
     out.close();
     fileOut.close();
   } catch (IOException e) {
@@ -77,7 +81,7 @@ public class Programs implements Serializable {
   }
 
   public void getProgramStartTime() {
-    ProgramStartTime = System.currentTimeMillis();
+    this.setProgramStartTime(System.currentTimeMillis()) ;
 
   }
 

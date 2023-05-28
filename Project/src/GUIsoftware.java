@@ -114,7 +114,7 @@ public static void main(String[] args)
             File fileProgram = new File("Project/src/cfg/programs.config");
             if (fileProgram.exists()) {
                CLI.createProgramfromfile();
-               LableBuilder ErrorProgramFile = new LableBuilder("Programs have been created", 0, 150);
+               LableBuilder ErrorProgramFile = new LableBuilder("Programs have been created!", 0, 150);
                ProgramFileInfo.add(ErrorProgramFile);
                ProgramFileInfo.repaint();
                ProgramFileInfo.revalidate();
@@ -122,7 +122,7 @@ public static void main(String[] args)
             }
             else {
 
-               LableBuilder ErrorProgramFile = new LableBuilder("No Programs found", 0, 150);
+               LableBuilder ErrorProgramFile = new LableBuilder("No Programs found! Entering manual mode...", 0, 150);
                ProgramFileInfo.add(ErrorProgramFile);
                ProgramFileInfo.repaint();
                ProgramFileInfo.revalidate();
