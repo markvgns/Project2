@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class GUIsoftware{
     
@@ -888,28 +889,33 @@ public static void main(String[] args)
      SortingPanel.setBackground(Color.DARK_GRAY);
 
      LableBuilder Sortinglabel1 = new LableBuilder("Loading VMs and Programs.....", 0, 00);
-     
-      CLI.queuing();
+             
+      
    
-     SortingPanel.add(Sortinglabel1);
-     LableBuilder Sortinglabel2 = new LableBuilder("Programs entering VMs.....", 0, 20);
-     SortingPanel.add(Sortinglabel2);
+                  SortingPanel.add(Sortinglabel1);
+                 
+     LableBuilder Sortinglabel2 = new LableBuilder("Assigning Programs to VMs....", 0, 20);
+                  SortingPanel.add(Sortinglabel2);
+                  
      LableBuilder Sortinglabel3 = new LableBuilder("Done!", 0, 40);
      SortingPanel.add(Sortinglabel3);
 
 
      ThirdFrame.add(SortingPanel); 
-
+                  
      ButtonBuilder FinishSortingButton = new ButtonBuilder("Finish", 100, 85);
-     SortingPanel.add(FinishSortingButton);
-     //---> kodikas pou emfanizei to teleutaio panel
+                  SortingPanel.add(FinishSortingButton);
+                  
+                  
+                  //---> kodikas pou emfanizei to teleutaio panel
+                  
      FinishSortingButton.addActionListener(new ActionListener() {
       
       @Override 
       public void actionPerformed(ActionEvent e)
       {
          FinishSortingButton.setEnabled(false);
-
+         
          SortingPanel.revalidate();
          SortingPanel.repaint();
 
@@ -943,7 +949,7 @@ public static void main(String[] args)
 
      });
      
-     
+                  
 
      //if(Programs rejected)
      {
@@ -1122,7 +1128,7 @@ public static void main(String[] args)
 
          });
 
-         LableBuilder Rejectedlabel1 = new LableBuilder("These Programs got rejected and placed on the File:", 0, 0);
+         LableBuilder Rejectedlabel1 = new LableBuilder("These Programs have Finished:", 0, 0);
          RejectedProgramPanel.add(Rejectedlabel1);
 
          //---> kodikas pou pernai id ton Programs pou eginan rrejected kai ta bazei na kanoun print me loop messenger
@@ -1195,7 +1201,7 @@ public static void main(String[] args)
       InitialFrame.add(DoneVMPanel);
     
      
-
+      CLI.queuing();
    }
  
  }

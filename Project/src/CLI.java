@@ -13,6 +13,8 @@ public class CLI {
 
  public static ArrayList<VM> VMs = new ArrayList<>();
  public static ArrayList<Programs> ProgramList = new ArrayList<>();
+ public static ArrayList<Integer> ProgramFinished = new ArrayList<>();
+ public static ArrayList<Integer> ProgramRejected = new ArrayList<>();
 
   static int numofPrograms = 0;
 
@@ -415,15 +417,14 @@ public static void createProgramfromfile() {
 
          }
       }
-        if (!(BoundedQueue.isQueueEmpty())) {
+      if (!(BoundedQueue.isQueueEmpty())) {
         Programs temppr = BoundedQueue.peek();
-         int k = VMload(temppr);
-        
+        int k = VMload(temppr);
 
         if (k != -5) {
           System.out.println("Program " + BoundedQueue.peek().getpID() + " has been loaded to a VM");
           programsadded++;
-          
+          ProgramFinished.add(BoundedQueue.peek().getpID());
           addProgram(BoundedQueue.deQueue(), k);
 
         } else {
@@ -431,7 +432,7 @@ public static void createProgramfromfile() {
           tempProgram.setRejectedTimes(tempProgram.getRejectedTimes() + 1);
           if (tempProgram.getRejectedTimes() < 3) {
             BoundedQueue.deQueue();
-            
+
             BoundedQueue.totheback(tempProgram);
             //sleeping
             long timetosleep = 2L;
@@ -442,16 +443,16 @@ public static void createProgramfromfile() {
               System.out.println(e.getMessage());
             }
           } else {
-            
+            ProgramRejected.add(BoundedQueue.peek().getpID());
             Programs temp = BoundedQueue.deQueue();
             temp.serialization();
 
-            //kai kane pop
-            // steile to se arxeio
+            
           }
 
         }
       }
+      
 
     }
 
