@@ -1,14 +1,14 @@
 
-- elegxos poron stin create VM kai PROJECT sta files
+
 - stin report vale ta allocated
 -stin report cpu: ram:
 -abstract
 -rejected arxeia (pairnei id apo programmata p eginan rejected)
--seira sta queue
- 
 
+ 
+-TELEIOSE TO REPORT
 
 -program ID
 
--diegrapse main
+
 -TREKSE STARTQUEUE

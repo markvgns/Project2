@@ -537,6 +537,7 @@ public static void createProgramfromfile() {
     VMs.get(index).ExecutingProjects.add(program);
     VMs.get(index).setAllocated_CPU(VMs.get(index).getAllocated_CPU() + program.getProgramCores());
     VMs.get(index).setAllocated_RAM(VMs.get(index).getAllocated_RAM() + program.getProgramRAM());
+   
 
     if (VMs.get(index) instanceof PlainVM) {
       ((PlainVM) VMs.get(index))
